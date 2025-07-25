@@ -1,0 +1,453 @@
+{% extends "base.html" %} {% block title %}Our Products - Elliott Acres Farm{%
+endblock %} {% block description %}Explore our fresh, locally grown produce
+including strawberries, asparagus, garlic, seasonal fruits, and farm-made
+spices. All products are grown using sustainable, pesticide-free methods.{%
+endblock %} {% block content %}
+<!-- Page Header -->
+<section class="hero-section" style="min-height: 50vh">
+  <div class="container">
+    <div class="hero-content">
+      <h1 class="display-4 fw-bold">Our Fresh Produce</h1>
+      <p class="lead">
+        Discover the vibrant variety of farm-fresh products we grow with love
+        and care
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Product Categories -->
+<section class="py-5">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="display-5 fw-bold text-success">Product Categories</h2>
+      <p class="lead text-muted">
+        From sweet strawberries to aromatic spices, explore our full range of
+        fresh produce
+      </p>
+    </div>
+
+    <div class="row">
+      <!-- Strawberries -->
+      <div class="col-lg-6 mb-4">
+        <div class="product-card category-strawberry h-100">
+          <div class="row g-0 h-100">
+            <div class="col-md-5">
+              <img
+                src="/static/images/strawberries-card.jpg"
+                class="product-card-img w-100 h-100"
+                alt="Fresh Strawberries"
+              />
+            </div>
+            <div class="col-md-7">
+              <div class="product-card-body h-100 d-flex flex-column">
+                <h4 class="fw-bold text-strawberry mb-3">
+                  <i class="fas fa-circle me-2" style="font-size: 0.8rem"></i>
+                  Strawberries
+                </h4>
+                <p class="flex-grow-1">
+                  Sweet, juicy strawberries bursting with flavor. Perfect for
+                  eating fresh, making jams, or adding to desserts. Available as
+                  fresh berries, frozen, and homemade preserves.
+                </p>
+                <div class="mb-3">
+                  <small class="text-muted">
+                    <i class="fas fa-calendar me-1"></i>Season: May - July<br />
+                    <i class="fas fa-leaf me-1"></i>Varieties: 3+ types
+                    available
+                  </small>
+                </div>
+                <div class="d-flex gap-2">
+                  <a
+                    href="{{ url_for('product_category', category='Strawberries') }}"
+                    class="btn btn-outline-danger flex-fill"
+                  >
+                    View Products
+                  </a>
+                  <button
+                    class="btn btn-danger btn-product-request"
+                    data-category="Strawberries"
+                  >
+                    Request Info
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Asparagus -->
+      <div class="col-lg-6 mb-4">
+        <div class="product-card category-asparagus h-100">
+          <div class="row g-0 h-100">
+            <div class="col-md-5">
+              <img
+                src="/static/images/asparagus-card.jpg"
+                class="product-card-img w-100 h-100"
+                alt="Fresh Asparagus"
+              />
+            </div>
+            <div class="col-md-7">
+              <div class="product-card-body h-100 d-flex flex-column">
+                <h4 class="fw-bold text-asparagus mb-3">
+                  <i class="fas fa-circle me-2" style="font-size: 0.8rem"></i>
+                  Asparagus
+                </h4>
+                <p class="flex-grow-1">
+                  Tender, crisp asparagus spears harvested at peak freshness.
+                  Known for exceptional flavor and texture. Available fresh and
+                  pickled with herbs and spices.
+                </p>
+                <div class="mb-3">
+                  <small class="text-muted">
+                    <i class="fas fa-calendar me-1"></i>Season: April - June<br />
+                    <i class="fas fa-leaf me-1"></i>Harvested daily in season
+                  </small>
+                </div>
+                <div class="d-flex gap-2">
+                  <a
+                    href="{{ url_for('product_category', category='Asparagus') }}"
+                    class="btn btn-outline-success flex-fill"
+                  >
+                    View Products
+                  </a>
+                  <button
+                    class="btn btn-success btn-product-request"
+                    data-category="Asparagus"
+                  >
+                    Request Info
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Garlic -->
+      <div class="col-lg-6 mb-4">
+        <div class="product-card category-garlic h-100">
+          <div class="row g-0 h-100">
+            <div class="col-md-5">
+              <img
+                src="/static/images/garlic-card.jpg"
+                class="product-card-img w-100 h-100"
+                alt="Fresh Garlic"
+              />
+            </div>
+            <div class="col-md-7">
+              <div class="product-card-body h-100 d-flex flex-column">
+                <h4 class="fw-bold text-garlic mb-3">
+                  <i class="fas fa-circle me-2" style="font-size: 0.8rem"></i>
+                  Garlic
+                </h4>
+                <p class="flex-grow-1">
+                  Premium hardneck garlic with intense flavor and aroma.
+                  Multiple heirloom varieties from mild to bold. Available as
+                  bulbs, powder, and seasonal scapes.
+                </p>
+                <div class="mb-3">
+                  <small class="text-muted">
+                    <i class="fas fa-calendar me-1"></i>Season: July harvest,
+                    stored year-round<br />
+                    <i class="fas fa-leaf me-1"></i>Multiple heirloom varieties
+                  </small>
+                </div>
+                <div class="d-flex gap-2">
+                  <a
+                    href="{{ url_for('product_category', category='Garlic') }}"
+                    class="btn btn-outline-warning flex-fill"
+                  >
+                    View Products
+                  </a>
+                  <button
+                    class="btn btn-warning btn-product-request"
+                    data-category="Garlic"
+                  >
+                    Request Info
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fruits -->
+      <div class="col-lg-6 mb-4">
+        <div class="product-card category-fruits h-100">
+          <div class="row g-0 h-100">
+            <div class="col-md-5">
+              <img
+                src="/static/images/fruits-card.jpg"
+                class="product-card-img w-100 h-100"
+                alt="Seasonal Fruits"
+              />
+            </div>
+            <div class="col-md-7">
+              <div class="product-card-body h-100 d-flex flex-column">
+                <h4 class="fw-bold text-fruit mb-3">
+                  <i class="fas fa-circle me-2" style="font-size: 0.8rem"></i>
+                  Seasonal Fruits
+                </h4>
+                <p class="flex-grow-1">
+                  A rotating selection of seasonal fruits grown with care. From
+                  summer berries to fall apples, tree-ripened for optimal flavor
+                  and nutrition.
+                </p>
+                <div class="mb-3">
+                  <small class="text-muted">
+                    <i class="fas fa-calendar me-1"></i>Season: Various
+                    throughout year<br />
+                    <i class="fas fa-leaf me-1"></i>Tree-ripened, no artificial
+                    ripening
+                  </small>
+                </div>
+                <div class="d-flex gap-2">
+                  <a
+                    href="{{ url_for('product_category', category='Fruits') }}"
+                    class="btn btn-outline-primary flex-fill"
+                  >
+                    View Products
+                  </a>
+                  <button
+                    class="btn btn-primary btn-product-request"
+                    data-category="Fruits"
+                  >
+                    Request Info
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Spices - Full Width -->
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="product-card category-spices">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <img
+                src="/static/images/spices-card.jpg"
+                class="product-card-img w-100 h-100"
+                alt="Farm Spices"
+                style="min-height: 200px"
+              />
+            </div>
+            <div class="col-md-8">
+              <div class="product-card-body">
+                <h4 class="fw-bold text-spice mb-3">
+                  <i class="fas fa-circle me-2" style="font-size: 0.8rem"></i>
+                  Farm-Fresh Spices
+                </h4>
+                <p class="mb-4">
+                  Handcrafted spice blends and dried herbs from our own garden.
+                  Each blend is carefully created to enhance your culinary
+                  creations with pure, intense flavors of farm-fresh
+                  ingredients. No artificial additives, peak potency guaranteed.
+                </p>
+                <div class="row mb-4">
+                  <div class="col-sm-6">
+                    <small class="text-muted">
+                      <i class="fas fa-calendar me-1"></i>Season: Year-round
+                      availability<br />
+                      <i class="fas fa-leaf me-1"></i>Hand-harvested and dried
+                    </small>
+                  </div>
+                  <div class="col-sm-6">
+                    <small class="text-muted">
+                      <i class="fas fa-mortar-pestle me-1"></i>Custom blends
+                      available<br />
+                      <i class="fas fa-seedling me-1"></i>No artificial
+                      additives
+                    </small>
+                  </div>
+                </div>
+                <div class="d-flex gap-2">
+                  <a
+                    href="{{ url_for('product_category', category='Spices') }}"
+                    class="btn btn-outline-secondary flex-fill"
+                  >
+                    View Products
+                  </a>
+                  <button
+                    class="btn btn-secondary btn-product-request"
+                    data-category="Spices"
+                  >
+                    Request Info
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Growing Practices -->
+<section class="bg-warm py-5">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="display-5 fw-bold text-success">Our Growing Practices</h2>
+      <p class="lead text-muted">How we ensure the highest quality produce</p>
+    </div>
+
+    <div class="row">
+      <div class="col-md-3 col-sm-6 mb-4">
+        <div class="text-center">
+          <div
+            class="bg-success text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center"
+            style="width: 80px; height: 80px"
+          >
+            <i class="fas fa-seedling fa-2x"></i>
+          </div>
+          <h5 class="fw-bold">Organic Methods</h5>
+          <p class="text-muted">
+            No synthetic pesticides, herbicides, or chemical fertilizers
+          </p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 mb-4">
+        <div class="text-center">
+          <div
+            class="bg-primary text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center"
+            style="width: 80px; height: 80px"
+          >
+            <i class="fas fa-clock fa-2x"></i>
+          </div>
+          <h5 class="fw-bold">Fresh Harvest</h5>
+          <p class="text-muted">
+            Picked within 24 hours of delivery for peak freshness
+          </p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 mb-4">
+        <div class="text-center">
+          <div
+            class="bg-warning text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center"
+            style="width: 80px; height: 80px"
+          >
+            <i class="fas fa-recycle fa-2x"></i>
+          </div>
+          <h5 class="fw-bold">Sustainable</h5>
+          <p class="text-muted">
+            Soil health and biodiversity-focused farming practices
+          </p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 mb-4">
+        <div class="text-center">
+          <div
+            class="bg-info text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center"
+            style="width: 80px; height: 80px"
+          >
+            <i class="fas fa-handshake fa-2x"></i>
+          </div>
+          <h5 class="fw-bold">Local Focus</h5>
+          <p class="text-muted">
+            Supporting our community with fresh, local food
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Seasonal Availability -->
+<section class="py-5">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="display-5 fw-bold text-success">Seasonal Availability</h2>
+      <p class="lead text-muted">
+        When to find your favorite products at their peak
+      </p>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead class="table-success">
+          <tr>
+            <th>Product</th>
+            <th>Spring</th>
+            <th>Summer</th>
+            <th>Fall</th>
+            <th>Winter</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="fw-bold text-strawberry">Strawberries</td>
+            <td><span class="badge bg-success">Peak Season</span></td>
+            <td><span class="badge bg-warning">Limited</span></td>
+            <td><span class="badge bg-secondary">Preserves Only</span></td>
+            <td><span class="badge bg-secondary">Preserves Only</span></td>
+          </tr>
+          <tr>
+            <td class="fw-bold text-asparagus">Asparagus</td>
+            <td><span class="badge bg-success">Peak Season</span></td>
+            <td><span class="badge bg-warning">Early Summer</span></td>
+            <td><span class="badge bg-secondary">Not Available</span></td>
+            <td><span class="badge bg-secondary">Not Available</span></td>
+          </tr>
+          <tr>
+            <td class="fw-bold text-warning">Garlic</td>
+            <td><span class="badge bg-info">Scapes Available</span></td>
+            <td><span class="badge bg-success">Fresh Harvest</span></td>
+            <td><span class="badge bg-success">Cured Bulbs</span></td>
+            <td><span class="badge bg-success">Stored Bulbs</span></td>
+          </tr>
+          <tr>
+            <td class="fw-bold text-fruit">Seasonal Fruits</td>
+            <td><span class="badge bg-warning">Early Varieties</span></td>
+            <td><span class="badge bg-success">Peak Season</span></td>
+            <td><span class="badge bg-success">Fall Harvest</span></td>
+            <td><span class="badge bg-info">Stored Varieties</span></td>
+          </tr>
+          <tr>
+            <td class="fw-bold text-spice">Spices & Herbs</td>
+            <td><span class="badge bg-success">Available</span></td>
+            <td><span class="badge bg-success">Available</span></td>
+            <td><span class="badge bg-success">Available</span></td>
+            <td><span class="badge bg-success">Available</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- Call to Action -->
+<section class="bg-success text-white py-5">
+  <div class="container text-center">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <h2 class="display-5 fw-bold mb-4">Ready to Order Fresh Produce?</h2>
+        <p class="lead mb-4">
+          Contact us to check current availability, place orders, or ask
+          questions about our products. We're here to help you get the freshest
+          produce for your table.
+        </p>
+        <div
+          class="d-flex flex-column flex-sm-row gap-3 justify-content-center"
+        >
+          <a href="{{ url_for('contact') }}" class="btn btn-light btn-lg">
+            <i class="fas fa-phone me-2"></i>Contact Us
+          </a>
+          <button
+            class="btn btn-outline-light btn-lg btn-product-request"
+            data-category=""
+          >
+            <i class="fas fa-shopping-basket me-2"></i>Request Product Info
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

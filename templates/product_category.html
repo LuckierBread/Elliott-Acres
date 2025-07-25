@@ -1,0 +1,463 @@
+{% extends "base.html" %} {% block title %}{{ category }} - Elliott Acres Farm{%
+endblock %} {% block description %}Fresh {{ category.lower() }} from Elliott
+Acres Farm. View our products, prices, and delicious recipes featuring our
+farm-grown {{ category.lower() }}.{% endblock %} {% block content %}
+<!-- Category Header -->
+<section class="hero-section" style="min-height: 40vh">
+  <div class="container">
+    <div class="hero-content">
+      <h1 class="display-4 fw-bold">
+        {% if category == 'Strawberries' %}
+        <span class="text-strawberry">🍓 {{ category }}</span>
+        {% elif category == 'Asparagus' %}
+        <span class="text-asparagus">🥒 {{ category }}</span>
+        {% elif category == 'Garlic' %}
+        <span class="text-warning">🧄 {{ category }}</span>
+        {% elif category == 'Fruits' %}
+        <span class="text-fruit">🍎 Seasonal {{ category }}</span>
+        {% elif category == 'Spices' %}
+        <span class="text-spice">🌿 Farm {{ category }}</span>
+        {% endif %}
+      </h1>
+      <p class="lead">
+        {% if category == 'Strawberries' %} Sweet, juicy strawberries bursting
+        with flavor and picked fresh daily {% elif category == 'Asparagus' %}
+        Tender, crisp asparagus spears harvested at peak freshness {% elif
+        category == 'Garlic' %} Premium hardneck garlic with intense flavor and
+        aroma {% elif category == 'Fruits' %} A rotating selection of seasonal
+        fruits grown with care {% elif category == 'Spices' %} Handcrafted spice
+        blends and dried herbs from our garden {% endif %}
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Product List Section -->
+<section class="py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="mb-5">
+          <h2 class="h1 fw-bold mb-4">
+            {% if category == 'Strawberries' %}
+            <span class="text-strawberry">Available {{ category }}</span>
+            {% elif category == 'Asparagus' %}
+            <span class="text-asparagus">Available {{ category }}</span>
+            {% elif category == 'Garlic' %}
+            <span class="text-warning">Available {{ category }}</span>
+            {% elif category == 'Fruits' %}
+            <span class="text-fruit">Available {{ category }}</span>
+            {% elif category == 'Spices' %}
+            <span class="text-spice">Available {{ category }}</span>
+            {% endif %}
+          </h2>
+
+          {% if products %}
+          <div class="row">
+            {% for product in products %}
+            <div class="col-md-6 mb-4">
+              <div class="card h-100 border-0 shadow-sm">
+                {% if product.image_url %}
+                <img
+                  src="{{ product.image_url }}"
+                  class="card-img-top"
+                  alt="{{ product.name }}"
+                  style="height: 200px; object-fit: cover"
+                />
+                {% endif %}
+                <div class="card-body d-flex flex-column">
+                  <div
+                    class="d-flex justify-content-between align-items-start mb-2"
+                  >
+                    <h5 class="card-title fw-bold">{{ product.name }}</h5>
+                    {% if product.price %}
+                    <span
+                      class="badge {% if category == 'Strawberries' %}bg-danger {% elif category == 'Asparagus' %}bg-success {% elif category == 'Garlic' %}bg-warning {% elif category == 'Fruits' %}bg-primary {% elif category == 'Spices' %}bg-secondary {% endif %} fs-6"
+                    >
+                      {{ product.price }}
+                    </span>
+                    {% endif %}
+                  </div>
+                  {% if product.description %}
+                  <p class="card-text flex-grow-1">{{ product.description }}</p>
+                  {% endif %}
+                  <div class="mt-auto">
+                    {% if product.available %}
+                    <small class="text-success"
+                      ><i class="fas fa-check-circle me-1"></i>Available</small
+                    >
+                    {% else %}
+                    <small class="text-muted"
+                      ><i class="fas fa-clock me-1"></i>Seasonal - Check
+                      availability</small
+                    >
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          {% else %}
+          <!-- Default product list when no products in database -->
+          <div class="row">
+            {% if category == 'Strawberries' %} {% set default_products = [
+            {'name': 'Fresh Strawberries', 'price': '$6.00/lb', 'desc': 'Sweet,
+            juicy strawberries picked fresh daily'}, {'name': 'Strawberry Jam',
+            'price': '$8.50', 'desc': 'Homemade jam made from our farm-fresh
+            berries'}, {'name': 'Frozen Strawberries', 'price': '$5.00/lb',
+            'desc': 'Flash-frozen berries perfect for smoothies'}, {'name':
+            'Strawberry Preserves', 'price': '$9.25', 'desc': 'Traditional
+            preserves with whole berry pieces'}, {'name': 'Dried Strawberries',
+            'price': '$12.00', 'desc': 'Naturally dried strawberries with no
+            added sugar'} ] %} {% elif category == 'Asparagus' %} {% set
+            default_products = [ {'name': 'Fresh Asparagus Spears', 'price':
+            '$4.50/lb', 'desc': 'Tender spears harvested at peak freshness'},
+            {'name': 'Pickled Asparagus', 'price': '$7.25', 'desc': 'Crispy
+            pickled asparagus with herbs and spices'}, {'name': 'Asparagus
+            Crowns', 'price': '$3.50/crown', 'desc': 'Start your own asparagus
+            patch'}, {'name': 'Baby Asparagus', 'price': '$6.00/lb', 'desc':
+            'Delicate thin spears perfect for salads'}, {'name': 'Asparagus
+            Tips', 'price': '$8.00/lb', 'desc': 'Premium tender tips, restaurant
+            quality'} ] %} {% elif category == 'Garlic' %} {% set
+            default_products = [ {'name': 'Fresh Garlic Bulbs', 'price':
+            '$12.00/lb', 'desc': 'Aromatic hardneck garlic bulbs'}, {'name':
+            'Garlic Powder', 'price': '$5.00', 'desc': 'Fine ground garlic
+            powder'}, {'name': 'Garlic Scapes', 'price': '$3.50/bunch', 'desc':
+            'Tender garlic scapes perfect for stir-fries'}, {'name': 'Black
+            Garlic', 'price': '$15.00', 'desc': 'Fermented garlic with sweet,
+            complex flavor'}, {'name': 'Garlic Salt Blend', 'price': '$6.75',
+            'desc': 'Custom blend of garlic and sea salt'} ] %} {% elif category
+            == 'Fruits' %} {% set default_products = [ {'name': 'Summer
+            Peaches', 'price': '$4.00/lb', 'desc': 'Tree-ripened peaches at peak
+            sweetness'}, {'name': 'Apple Varieties', 'price': '$3.50/lb',
+            'desc': 'Multiple heirloom apple varieties'}, {'name': 'Fresh
+            Berries Mix', 'price': '$8.00/pint', 'desc': 'Seasonal berry
+            medley'}, {'name': 'Pears', 'price': '$4.25/lb', 'desc': 'Buttery
+            smooth pears, multiple varieties'}, {'name': 'Plums', 'price':
+            '$5.00/lb', 'desc': 'Sweet and tart plums in season'} ] %} {% elif
+            category == 'Spices' %} {% set default_products = [ {'name':
+            'Italian Herb Blend', 'price': '$7.50', 'desc': 'Basil, oregano,
+            thyme, and rosemary'}, {'name': 'Pizza Seasoning', 'price': '$6.25',
+            'desc': 'Perfect blend for homemade pizza'}, {'name': 'Garden Herb
+            Salt', 'price': '$5.75', 'desc': 'Sea salt with dried garden
+            herbs'}, {'name': 'Spicy Pepper Blend', 'price': '$8.00', 'desc':
+            'Hot pepper blend for heat lovers'}, {'name': 'Dried Basil',
+            'price': '$4.50', 'desc': 'Pure dried basil leaves'} ] %} {% endif
+            %} {% for product in default_products %}
+            <div class="col-md-6 mb-4">
+              <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body d-flex flex-column">
+                  <div
+                    class="d-flex justify-content-between align-items-start mb-2"
+                  >
+                    <h5 class="card-title fw-bold">{{ product.name }}</h5>
+                    <span
+                      class="badge {% if category == 'Strawberries' %}bg-danger {% elif category == 'Asparagus' %}bg-success {% elif category == 'Garlic' %}bg-warning {% elif category == 'Fruits' %}bg-primary {% elif category == 'Spices' %}bg-secondary {% endif %} fs-6"
+                    >
+                      {{ product.price }}
+                    </span>
+                  </div>
+                  <p class="card-text flex-grow-1">{{ product.desc }}</p>
+                  <div class="mt-auto">
+                    <small class="text-success"
+                      ><i class="fas fa-check-circle me-1"></i>Available</small
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="col-lg-4">
+        <div class="sticky-top" style="top: 100px">
+          <!-- Request Information Card -->
+          <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body text-center">
+              <h5 class="card-title fw-bold mb-3">
+                Interested in {{ category }}?
+              </h5>
+              <p class="card-text">
+                Contact us for current availability, pricing, and to place your
+                order.
+              </p>
+              <button
+                class="btn {% if category == 'Strawberries' %}btn-danger {% elif category == 'Asparagus' %}btn-success {% elif category == 'Garlic' %}btn-warning {% elif category == 'Fruits' %}btn-primary {% elif category == 'Spices' %}btn-secondary {% endif %} btn-lg w-100 btn-product-request"
+                data-category="{{ category }}"
+              >
+                <i class="fas fa-shopping-basket me-2"></i>
+                Request Information
+              </button>
+            </div>
+          </div>
+
+          <!-- Growing Tips -->
+          <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body">
+              <h6 class="card-title fw-bold mb-3">
+                <i class="fas fa-lightbulb text-warning me-2"></i>
+                Growing Tips
+              </h6>
+              {% if category == 'Strawberries' %}
+              <ul class="list-unstyled small">
+                <li class="mb-2">
+                  <i class="fas fa-check text-success me-2"></i>Store in
+                  refrigerator, don't wash until ready to eat
+                </li>
+                <li class="mb-2">
+                  <i class="fas fa-check text-success me-2"></i>Best consumed
+                  within 3-5 days of purchase
+                </li>
+                <li class="mb-2">
+                  <i class="fas fa-check text-success me-2"></i>Freeze whole for
+                  smoothies
+                </li>
+              </ul>
+              {% elif category == 'Asparagus' %}
+              <ul class="list-unstyled small">
+                <li class="mb-2">
+                  <i class="fas fa-check text-success me-2"></i>Store upright in
+                  water like flowers
+                </li>
+                <li class="mb-2">
+                  <i class="fas fa-check text-success me-2"></i>Best consumed
+                  within 2-3 days
+                </li>
+                <li class="mb-2">
+                  <i class="fas fa-check text-success me-2"></i>Snap ends
+                  naturally at breaking point
+                </li>
+              </ul>
+              {% elif category == 'Garlic' %}
+              <ul class="list-unstyled small">
+                <li class="mb-2">
+                  <i class="fas fa-check text-success me-2"></i>Store in cool,
+                  dry place with good air circulation
+                </li>
+                <li class="mb-2">
+                  <i class="fas fa-check text-success me-2"></i>Don't
+                  refrigerate whole bulbs
+                </li>
+                <li class="mb-2">
+                  <i class="fas fa-check text-success me-2"></i>Can last 6-10
+                  months when properly stored
+                </li>
+              </ul>
+              {% elif category == 'Fruits' %}
+              <ul class="list-unstyled small">
+                <li class="mb-2">
+                  <i class="fas fa-check text-success me-2"></i>Different fruits
+                  have different storage needs
+                </li>
+                <li class="mb-2">
+                  <i class="fas fa-check text-success me-2"></i>Some ripen after
+                  picking, others don't
+                </li>
+                <li class="mb-2">
+                  <i class="fas fa-check text-success me-2"></i>We'll provide
+                  specific care instructions
+                </li>
+              </ul>
+              {% elif category == 'Spices' %}
+              <ul class="list-unstyled small">
+                <li class="mb-2">
+                  <i class="fas fa-check text-success me-2"></i>Store in
+                  airtight containers away from light
+                </li>
+                <li class="mb-2">
+                  <i class="fas fa-check text-success me-2"></i>Best used within
+                  1-2 years for optimal flavor
+                </li>
+                <li class="mb-2">
+                  <i class="fas fa-check text-success me-2"></i>Grind whole
+                  spices just before use
+                </li>
+              </ul>
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- Other Categories -->
+          <div class="card border-0 shadow-sm">
+            <div class="card-body">
+              <h6 class="card-title fw-bold mb-3">
+                <i class="fas fa-seedling text-success me-2"></i>
+                Other Products
+              </h6>
+              <div class="d-grid gap-2">
+                {% for cat in ['Strawberries', 'Asparagus', 'Garlic', 'Fruits',
+                'Spices'] %} {% if cat != category %}
+                <a
+                  href="{{ url_for('product_category', category=cat) }}"
+                  class="btn btn-outline-secondary btn-sm"
+                >
+                  {% if cat == 'Strawberries' %}🍓 {{ cat }} {% elif cat ==
+                  'Asparagus' %}🥒 {{ cat }} {% elif cat == 'Garlic' %}🧄 {{ cat
+                  }} {% elif cat == 'Fruits' %}🍎 {{ cat }} {% elif cat ==
+                  'Spices' %}🌿 {{ cat }} {% endif %}
+                </a>
+                {% endif %} {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Recipes Section -->
+{% if recipes or category %}
+<section class="bg-warm py-5">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2
+        class="display-5 fw-bold {% if category == 'Strawberries' %}text-strawberry {% elif category == 'Asparagus' %}text-asparagus {% elif category == 'Garlic' %}text-warning {% elif category == 'Fruits' %}text-fruit {% elif category == 'Spices' %}text-spice {% endif %}"
+      >
+        Delicious {{ category }} Recipes
+      </h2>
+      <p class="lead text-muted">
+        Try these farm-tested recipes featuring our fresh {{ category.lower() }}
+      </p>
+    </div>
+
+    <div class="recipe-grid">
+      {% if recipes %} {% for recipe in recipes %}
+      <div class="recipe-card">
+        <div class="recipe-card-inner">
+          <div class="recipe-card-front">
+            <img
+              src="{{ recipe.image_url or '/static/images/recipe-default.jpg' }}"
+              alt="{{ recipe.title }}"
+              class="recipe-image"
+            />
+            <div class="recipe-title">
+              <h5 class="fw-bold mb-0">{{ recipe.title }}</h5>
+            </div>
+          </div>
+          <div class="recipe-card-back">
+            <h6 class="fw-bold mb-3">{{ recipe.title }}</h6>
+            <div class="mb-3">
+              <strong>Ingredients:</strong>
+              <p class="small mb-0">{{ recipe.ingredients }}</p>
+            </div>
+            <div>
+              <strong>Instructions:</strong>
+              <p class="small mb-0">{{ recipe.instructions }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %} {% else %}
+      <!-- Default recipes when none in database -->
+      {% if category == 'Strawberries' %} {% set default_recipes = [ {'title':
+      'Strawberry Shortcake', 'ingredients': 'Fresh strawberries, biscuits,
+      whipped cream, sugar', 'instructions': '1. Slice strawberries and mix with
+      sugar. 2. Split biscuits. 3. Layer with berries and cream.'}, {'title':
+      'Strawberry Jam', 'ingredients': 'Strawberries, sugar, lemon juice,
+      pectin', 'instructions': '1. Crush strawberries. 2. Mix with sugar and
+      lemon. 3. Cook until thickened. 4. Add pectin.'}, {'title': 'Berry
+      Smoothie', 'ingredients': 'Frozen strawberries, banana, yogurt, honey',
+      'instructions': '1. Combine all ingredients in blender. 2. Blend until
+      smooth. 3. Serve immediately.'} ] %} {% elif category == 'Asparagus' %} {%
+      set default_recipes = [ {'title': 'Roasted Asparagus', 'ingredients':
+      'Fresh asparagus, olive oil, salt, pepper, garlic', 'instructions': '1.
+      Preheat oven to 400°F. 2. Toss asparagus with oil and seasonings. 3. Roast
+      15-20 minutes.'}, {'title': 'Asparagus Risotto', 'ingredients':
+      'Asparagus, arborio rice, white wine, broth, parmesan', 'instructions':
+      '1. Sauté rice until translucent. 2. Add wine and broth gradually. 3. Stir
+      in asparagus and cheese.'}, {'title': 'Grilled Asparagus', 'ingredients':
+      'Asparagus spears, olive oil, lemon, herbs', 'instructions': '1. Brush
+      asparagus with oil. 2. Grill 5-8 minutes. 3. Finish with lemon and
+      herbs.'} ] %} {% elif category == 'Garlic' %} {% set default_recipes = [
+      {'title': 'Roasted Garlic Spread', 'ingredients': 'Whole garlic bulbs,
+      olive oil, salt', 'instructions': '1. Cut tops off bulbs. 2. Drizzle with
+      oil. 3. Roast at 400°F for 45 minutes.'}, {'title': 'Garlic Butter',
+      'ingredients': 'Fresh garlic, butter, salt, herbs', 'instructions': '1.
+      Mince garlic finely. 2. Mix with softened butter. 3. Add salt and herbs to
+      taste.'}, {'title': 'Garlic Scape Pesto', 'ingredients': 'Garlic scapes,
+      nuts, oil, parmesan', 'instructions': '1. Chop scapes roughly. 2. Process
+      with nuts and oil. 3. Add cheese and season.'} ] %} {% elif category ==
+      'Fruits' %} {% set default_recipes = [ {'title': 'Fruit Salad Supreme',
+      'ingredients': 'Mixed seasonal fruits, honey, lime juice, mint',
+      'instructions': '1. Chop fruits into bite-sized pieces. 2. Toss with honey
+      and lime. 3. Garnish with mint.'}, {'title': 'Baked Fruit Crisp',
+      'ingredients': 'Seasonal fruits, oats, flour, butter, brown sugar',
+      'instructions': '1. Layer fruits in baking dish. 2. Top with oat mixture.
+      3. Bake until golden.'}, {'title': 'Fresh Fruit Tart', 'ingredients':
+      'Pastry crust, pastry cream, fresh fruits', 'instructions': '1. Bake tart
+      shell. 2. Fill with pastry cream. 3. Arrange fresh fruits on top.'} ] %}
+      {% elif category == 'Spices' %} {% set default_recipes = [ {'title':
+      'Herb-Crusted Chicken', 'ingredients': 'Chicken, mixed herbs, olive oil,
+      breadcrumbs', 'instructions': '1. Mix herbs with breadcrumbs. 2. Coat
+      chicken with oil then herbs. 3. Bake until done.'}, {'title': 'Seasoned
+      Roasted Vegetables', 'ingredients': 'Mixed vegetables, herb blend, olive
+      oil', 'instructions': '1. Cut vegetables evenly. 2. Toss with oil and
+      spices. 3. Roast until tender.'}, {'title': 'Homemade Spice Rub',
+      'ingredients': 'Various spices, salt, sugar', 'instructions': '1. Combine
+      all spices. 2. Mix thoroughly. 3. Store in airtight container.'} ] %} {%
+      endif %} {% for recipe in default_recipes %}
+      <div class="recipe-card">
+        <div class="recipe-card-inner">
+          <div class="recipe-card-front">
+            <img
+              src="/static/images/recipe-default.jpg"
+              alt="{{ recipe.title }}"
+              class="recipe-image"
+            />
+            <div class="recipe-title">
+              <h5 class="fw-bold mb-0">{{ recipe.title }}</h5>
+            </div>
+          </div>
+          <div class="recipe-card-back">
+            <h6 class="fw-bold mb-3">{{ recipe.title }}</h6>
+            <div class="mb-3">
+              <strong>Ingredients:</strong>
+              <p class="small mb-0">{{ recipe.ingredients }}</p>
+            </div>
+            <div>
+              <strong>Instructions:</strong>
+              <p class="small mb-0">{{ recipe.instructions }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %} {% endif %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- Related Products CTA -->
+<section class="py-5">
+  <div class="container text-center">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <h2 class="h1 fw-bold mb-4">Love {{ category }}?</h2>
+        <p class="lead mb-4">
+          Explore our other fresh produce categories and discover the full range
+          of what Elliott Acres has to offer.
+        </p>
+        <div
+          class="d-flex flex-column flex-sm-row gap-3 justify-content-center"
+        >
+          <a href="{{ url_for('products') }}" class="btn btn-success btn-lg">
+            <i class="fas fa-seedling me-2"></i>View All Products
+          </a>
+          <a
+            href="{{ url_for('contact') }}"
+            class="btn btn-outline-success btn-lg"
+          >
+            <i class="fas fa-phone me-2"></i>Contact Us
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

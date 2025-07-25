@@ -1,0 +1,567 @@
+{% extends "admin/base.html" %} {% block title %}Dashboard - Elliott Acres
+Admin{% endblock %} {% block content %}
+<div
+  class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+>
+  <h1 class="h2">Dashboard</h1>
+  <div class="btn-toolbar mb-2 mb-md-0">
+    <div class="btn-group me-2">
+      <button type="button" class="btn btn-sm btn-outline-secondary">
+        Share
+      </button>
+      <button type="button" class="btn btn-sm btn-outline-secondary">
+        Export
+      </button>
+    </div>
+    <button type="button" class="btn btn-sm btn-primary dropdown-toggle">
+      This week
+    </button>
+  </div>
+</div>
+
+<!-- Stats Cards -->
+<div class="row mb-4">
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-primary shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div
+              class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+            >
+              Total Product Requests
+            </div>
+            <div
+              class="h5 mb-0 font-weight-bold text-gray-800"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              data-bs-html="true"
+              data-bs-title="<div class='task-breakdown'>
+                   <div class='breakdown-item'><i class='fas fa-clock'></i> Pending: {{ task_breakdown.pending_requests }}</div>
+                   <div class='breakdown-item'><i class='fas fa-phone'></i> Contacted: {{ requests|selectattr('status', 'equalto', 'contacted')|list|length }}</div>
+                   <div class='breakdown-item'><i class='fas fa-check'></i> Completed: {{ requests|selectattr('status', 'equalto', 'completed')|list|length }}</div>
+                 </div>"
+              style="cursor: help"
+            >
+              {{ requests|length }}
+            </div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-shopping-cart fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-success shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div
+              class="text-xs font-weight-bold text-success text-uppercase mb-1"
+            >
+              Contact Messages
+            </div>
+            <div
+              class="h5 mb-0 font-weight-bold text-gray-800"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              data-bs-html="true"
+              data-bs-title="<div class='task-breakdown'>
+                   <div class='breakdown-item'><i class='fas fa-envelope'></i> Unread: {{ task_breakdown.unread_messages }}</div>
+                   <div class='breakdown-item'><i class='fas fa-envelope-open'></i> Read: {{ messages|selectattr('read', 'equalto', True)|list|length }}</div>
+                 </div>"
+              style="cursor: help"
+            >
+              {{ messages|length }}
+            </div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-envelope fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-info shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+              Blog Posts
+            </div>
+            <div
+              class="h5 mb-0 font-weight-bold text-gray-800"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              data-bs-html="true"
+              data-bs-title="<div class='task-breakdown'>
+                   <div class='breakdown-item'><i class='fas fa-eye'></i> Published: {{ post_count - task_breakdown.unpublished_posts }}</div>
+                   <div class='breakdown-item'><i class='fas fa-edit'></i> Drafts: {{ task_breakdown.unpublished_posts }}</div>
+                 </div>"
+              style="cursor: help"
+            >
+              {{ post_count }}
+            </div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-blog fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-warning shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div
+              class="text-xs font-weight-bold text-warning text-uppercase mb-1"
+            >
+              Pending Tasks
+            </div>
+            <div
+              class="h5 mb-0 font-weight-bold text-gray-800"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              data-bs-html="true"
+              data-bs-title="<div class='task-breakdown'>
+                   <div class='breakdown-item'><i class='fas fa-shopping-cart'></i> Pending Requests: {{ task_breakdown.pending_requests }}</div>
+                   <div class='breakdown-item'><i class='fas fa-envelope'></i> Unread Messages: {{ task_breakdown.unread_messages }}</div>
+                   <div class='breakdown-item'><i class='fas fa-blog'></i> Unpublished Posts: {{ task_breakdown.unpublished_posts }}</div>
+                 </div>"
+              style="cursor: help"
+            >
+              {{ task_breakdown.total }}
+            </div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-tasks fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <!-- Recent Product Requests -->
+  <div class="col-lg-6 mb-4">
+    <div class="card shadow">
+      <div
+        class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+      >
+        <h6 class="m-0 font-weight-bold text-primary">
+          Recent Product Requests
+        </h6>
+        <a href="{{ url_for('admin_requests') }}" class="btn btn-sm btn-primary"
+          >View All</a
+        >
+      </div>
+      <div class="card-body">
+        {% if recent_requests %}
+        <div class="table-responsive">
+          <table class="table table-sm">
+            <thead>
+              <tr>
+                <th>Customer</th>
+                <th>Product</th>
+                <th>Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for request in recent_requests %}
+              <tr>
+                <td>{{ request.customer_name }}</td>
+                <td>{{ request.product_category }}</td>
+                <td>{{ request.created_at.strftime('%m/%d/%Y') }}</td>
+                <td>
+                  <span
+                    class="badge bg-{% if request.status == 'pending' %}warning{% elif request.status == 'completed' %}success{% else %}secondary{% endif %}"
+                  >
+                    {{ request.status.title() }}
+                  </span>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <p class="text-muted text-center">No recent requests</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Contact Messages -->
+  <div class="col-lg-6 mb-4">
+    <div class="card shadow">
+      <div
+        class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+      >
+        <h6 class="m-0 font-weight-bold text-primary">Recent Messages</h6>
+        <a href="{{ url_for('admin_messages') }}" class="btn btn-sm btn-primary"
+          >View All</a
+        >
+      </div>
+      <div class="card-body">
+        {% if recent_messages %}
+        <div class="table-responsive">
+          <table class="table table-sm">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Subject</th>
+                <th>Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for message in recent_messages %}
+              <tr>
+                <td>{{ message.name }}</td>
+                <td>
+                  {{ message.subject[:30] }}{% if message.subject|length > 30
+                  %}...{% endif %}
+                </td>
+                <td>{{ message.created_at.strftime('%m/%d/%Y') }}</td>
+                <td>
+                  <span
+                    class="badge bg-{% if message.read %}success{% else %}warning{% endif %}"
+                  >
+                    {% if message.read %}Read{% else %}New{% endif %}
+                  </span>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <p class="text-muted text-center">No recent messages</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="row">
+  <div class="col-12">
+    <div class="card shadow">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Quick Actions</h6>
+      </div>
+      <div class="card-body">
+        <div class="row text-center">
+          <div class="col-md-3 mb-3">
+            <a
+              href="{{ url_for('admin_blog_new') }}"
+              class="btn btn-outline-primary btn-lg w-100"
+            >
+              <i class="fas fa-plus-circle fa-2x d-block mb-2"></i>
+              New Blog Post
+            </a>
+          </div>
+          <div class="col-md-3 mb-3">
+            <a
+              href="{{ url_for('admin_requests') }}"
+              class="btn btn-outline-success btn-lg w-100"
+            >
+              <i class="fas fa-list-alt fa-2x d-block mb-2"></i>
+              View Requests
+            </a>
+          </div>
+          <div class="col-md-3 mb-3">
+            <a
+              href="{{ url_for('admin_messages') }}"
+              class="btn btn-outline-info btn-lg w-100"
+            >
+              <i class="fas fa-envelope-open fa-2x d-block mb-2"></i>
+              Read Messages
+            </a>
+          </div>
+          <div class="col-md-3 mb-3">
+            <a
+              href="{{ url_for('home') }}"
+              class="btn btn-outline-secondary btn-lg w-100"
+              target="_blank"
+            >
+              <i class="fas fa-external-link-alt fa-2x d-block mb-2"></i>
+              View Website
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .border-left-primary {
+    border-left: 0.25rem solid #4e73df !important;
+  }
+  .border-left-success {
+    border-left: 0.25rem solid #1cc88a !important;
+  }
+  .border-left-info {
+    border-left: 0.25rem solid #36b9cc !important;
+  }
+  .border-left-warning {
+    border-left: 0.25rem solid #f6c23e !important;
+  }
+  .text-xs {
+    font-size: 0.7rem;
+  }
+  .text-gray-800 {
+    color: #5a5c69 !important;
+  }
+  .text-gray-300 {
+    color: #dddfeb !important;
+  }
+
+  /* Custom tooltip styles */
+  .tooltip-inner {
+    background-color: #2c3e50;
+    border-radius: 8px;
+    padding: 12px;
+    max-width: 250px;
+    text-align: left;
+  }
+
+  .task-breakdown {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .breakdown-item {
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    color: #fff;
+  }
+
+  .breakdown-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .breakdown-item i {
+    margin-right: 8px;
+    width: 16px;
+    text-align: center;
+  }
+  .breakdown-item i.fa-shopping-cart {
+    color: #f39c12;
+  }
+
+  .breakdown-item i.fa-envelope {
+    color: #3498db;
+  }
+
+  .breakdown-item i.fa-envelope-open {
+    color: #27ae60;
+  }
+
+  .breakdown-item i.fa-blog {
+    color: #e74c3c;
+  }
+
+  .breakdown-item i.fa-clock {
+    color: #f39c12;
+  }
+
+  .breakdown-item i.fa-phone {
+    color: #9b59b6;
+  }
+
+  .breakdown-item i.fa-check {
+    color: #27ae60;
+  }
+
+  .breakdown-item i.fa-eye {
+    color: #3498db;
+  }
+
+  .breakdown-item i.fa-edit {
+    color: #e67e22;
+  }
+
+  /* Tooltip arrow styling */
+  .tooltip.bs-tooltip-top .tooltip-arrow::before {
+    border-top-color: #2c3e50;
+  }
+
+  .tooltip.bs-tooltip-bottom .tooltip-arrow::before {
+    border-bottom-color: #2c3e50;
+  }
+
+  .tooltip.bs-tooltip-start .tooltip-arrow::before {
+    border-left-color: #2c3e50;
+  }
+
+  .tooltip.bs-tooltip-end .tooltip-arrow::before {
+    border-right-color: #2c3e50;
+  }
+</style>
+
+{% block scripts %}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Initialize tooltips with custom configuration
+    var tooltipTriggerList = [].slice.call(
+      document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    );
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl, {
+        html: true,
+        delay: { show: 300, hide: 100 },
+        boundary: "viewport",
+      });
+    });
+
+    // Add click handler for pending tasks card to show more details
+    const pendingTasksCard = document.querySelector(".border-left-warning");
+    if (pendingTasksCard) {
+      pendingTasksCard.addEventListener("click", function () {
+        showTasksModal();
+      });
+
+      // Add hover effect
+      pendingTasksCard.style.cursor = "pointer";
+      pendingTasksCard.addEventListener("mouseenter", function () {
+        this.style.transform = "translateY(-2px)";
+        this.style.transition = "transform 0.2s ease";
+      });
+
+      pendingTasksCard.addEventListener("mouseleave", function () {
+        this.style.transform = "translateY(0)";
+      });
+    }
+
+    // Auto-refresh pending tasks count every 30 seconds
+    setInterval(refreshPendingTasks, 30000);
+  });
+
+  function showTasksModal() {
+    const modalHtml = `
+        <div class="modal fade" id="tasksModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <i class="fas fa-tasks me-2"></i>Pending Tasks Breakdown
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="list-group">
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <i class="fas fa-shopping-cart text-warning me-2"></i>
+                                    Pending Product Requests
+                                </div>
+                                <span class="badge bg-warning rounded-pill">{{ task_breakdown.pending_requests }}</span>
+                            </div>
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <i class="fas fa-envelope text-info me-2"></i>
+                                    Unread Messages
+                                </div>
+                                <span class="badge bg-info rounded-pill">{{ task_breakdown.unread_messages }}</span>
+                            </div>
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <i class="fas fa-blog text-danger me-2"></i>
+                                    Unpublished Posts
+                                </div>
+                                <span class="badge bg-danger rounded-pill">{{ task_breakdown.unpublished_posts }}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-3">
+                            <div class="alert alert-info">
+                                <small>
+                                    <i class="fas fa-info-circle me-1"></i>
+                                    Click on any task type above to navigate to the relevant section.
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <a href="{{ url_for('admin_requests') }}" class="btn btn-warning">View Requests</a>
+                        <a href="{{ url_for('admin_messages') }}" class="btn btn-info">View Messages</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    // Remove existing modal if any
+    const existingModal = document.getElementById("tasksModal");
+    if (existingModal) {
+      existingModal.remove();
+    }
+
+    // Add modal to page
+    document.body.insertAdjacentHTML("beforeend", modalHtml);
+
+    // Show modal
+    const modal = new bootstrap.Modal(document.getElementById("tasksModal"));
+    modal.show();
+
+    // Clean up when modal is hidden
+    document
+      .getElementById("tasksModal")
+      .addEventListener("hidden.bs.modal", function () {
+        this.remove();
+      });
+  }
+
+  function refreshPendingTasks() {
+    fetch("/admin/api/pending-tasks")
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          // Update the pending tasks count
+          const pendingTasksElement = document.querySelector(
+            ".border-left-warning .h5"
+          );
+          if (pendingTasksElement) {
+            pendingTasksElement.textContent = data.total;
+
+            // Update tooltip content
+            const tooltipContent = `
+                        <div class='task-breakdown'>
+                            <div class='breakdown-item'><i class='fas fa-shopping-cart'></i> Pending Requests: ${data.pending_requests}</div>
+                            <div class='breakdown-item'><i class='fas fa-envelope'></i> Unread Messages: ${data.unread_messages}</div>
+                            <div class='breakdown-item'><i class='fas fa-blog'></i> Unpublished Posts: ${data.unpublished_posts}</div>
+                        </div>
+                    `;
+
+            pendingTasksElement.setAttribute("data-bs-title", tooltipContent);
+
+            // Refresh tooltip
+            const tooltip = bootstrap.Tooltip.getInstance(pendingTasksElement);
+            if (tooltip) {
+              tooltip.dispose();
+              new bootstrap.Tooltip(pendingTasksElement, {
+                html: true,
+                delay: { show: 300, hide: 100 },
+                boundary: "viewport",
+              });
+            }
+          }
+        }
+      })
+      .catch((error) =>
+        console.error("Error refreshing pending tasks:", error)
+      );
+  }
+</script>
+{% endblock %} {% endblock %}

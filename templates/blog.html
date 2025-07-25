@@ -1,0 +1,203 @@
+{% extends "base.html" %} {% block title %}Farm Blog - Elliott Acres{% endblock
+%} {% block content %}
+<div class="container-fluid hero-section bg-primary text-white py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h1 class="display-4 mb-3">Farm Blog</h1>
+        <p class="lead">
+          Stories from our fields, kitchen wisdom, and seasonal updates
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container my-5">
+  <div class="row">
+    <div class="col-lg-8">
+      {% if posts.items %} {% for post in posts.items %}
+      <article class="card mb-4 shadow-sm blog-post-card">
+        {% if post.image_url %}
+        <img
+          src="{{ post.image_url }}"
+          class="card-img-top"
+          alt="{{ post.title }}"
+          style="height: 300px; object-fit: cover"
+        />
+        {% endif %}
+        <div class="card-body">
+          <h2 class="card-title h3">
+            <a href="#" class="text-decoration-none text-dark"
+              >{{ post.title }}</a
+            >
+          </h2>
+          <div class="text-muted mb-3">
+            <small>
+              <i class="fas fa-calendar-alt me-2"></i>{{
+              post.created_at.strftime('%B %d, %Y') }}
+              <i class="fas fa-user ms-3 me-2"></i>{{ post.author.username }}
+            </small>
+          </div>
+          <div class="card-text">
+            {{ post.content[:300] }}{% if post.content|length > 300 %}...{%
+            endif %}
+          </div>
+          <a href="#" class="btn btn-outline-primary mt-3">Read More</a>
+        </div>
+      </article>
+      {% endfor %}
+
+      <!-- Pagination -->
+      {% if posts.pages > 1 %}
+      <nav aria-label="Blog pagination">
+        <ul class="pagination justify-content-center">
+          {% if posts.has_prev %}
+          <li class="page-item">
+            <a
+              class="page-link"
+              href="{{ url_for('blog', page=posts.prev_num) }}"
+              >Previous</a
+            >
+          </li>
+          {% endif %} {% for page_num in posts.iter_pages() %} {% if page_num %}
+          {% if page_num != posts.page %}
+          <li class="page-item">
+            <a class="page-link" href="{{ url_for('blog', page=page_num) }}"
+              >{{ page_num }}</a
+            >
+          </li>
+          {% else %}
+          <li class="page-item active">
+            <span class="page-link">{{ page_num }}</span>
+          </li>
+          {% endif %} {% else %}
+          <li class="page-item disabled">
+            <span class="page-link">...</span>
+          </li>
+          {% endif %} {% endfor %} {% if posts.has_next %}
+          <li class="page-item">
+            <a
+              class="page-link"
+              href="{{ url_for('blog', page=posts.next_num) }}"
+              >Next</a
+            >
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+      {% endif %} {% else %}
+      <div class="text-center py-5">
+        <i class="fas fa-blog fa-3x text-muted mb-3"></i>
+        <h3>No blog posts yet!</h3>
+        <p class="text-muted">
+          Check back soon for farm updates and stories from Elliott Acres.
+        </p>
+      </div>
+      {% endif %}
+    </div>
+
+    <!-- Sidebar -->
+    <div class="col-lg-4">
+      <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0"><i class="fas fa-search me-2"></i>Search Blog</h5>
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Search posts..."
+              />
+              <button class="btn btn-outline-primary" type="submit">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0"><i class="fas fa-tags me-2"></i>Categories</h5>
+        </div>
+        <div class="list-group list-group-flush">
+          <a
+            href="#"
+            class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+          >
+            Farm Updates
+            <span class="badge bg-primary rounded-pill">12</span>
+          </a>
+          <a
+            href="#"
+            class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+          >
+            Recipes
+            <span class="badge bg-primary rounded-pill">8</span>
+          </a>
+          <a
+            href="#"
+            class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+          >
+            Seasonal Tips
+            <span class="badge bg-primary rounded-pill">15</span>
+          </a>
+          <a
+            href="#"
+            class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+          >
+            Behind the Scenes
+            <span class="badge bg-primary rounded-pill">6</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0"><i class="fas fa-archive me-2"></i>Archive</h5>
+        </div>
+        <div class="list-group list-group-flush">
+          <a href="#" class="list-group-item list-group-item-action"
+            >June 2025</a
+          >
+          <a href="#" class="list-group-item list-group-item-action"
+            >May 2025</a
+          >
+          <a href="#" class="list-group-item list-group-item-action"
+            >April 2025</a
+          >
+          <a href="#" class="list-group-item list-group-item-action"
+            >March 2025</a
+          >
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-success text-white">
+          <h5 class="mb-0"><i class="fas fa-leaf me-2"></i>Farm Newsletter</h5>
+        </div>
+        <div class="card-body">
+          <p class="card-text">
+            Stay updated with our latest harvests, recipes, and farm news!
+          </p>
+          <form>
+            <div class="mb-3">
+              <input
+                type="email"
+                class="form-control"
+                placeholder="Your email address"
+              />
+            </div>
+            <button type="submit" class="btn btn-success w-100">
+              Subscribe
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

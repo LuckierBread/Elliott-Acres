@@ -1,0 +1,453 @@
+{% extends "base.html" %} {% block title %}Contact Us - Elliott Acres Farm{%
+endblock %} {% block description %}Contact Elliott Acres Farm for product
+availability, orders, farm visits, or any questions about our fresh produce.
+We're here to help!{% endblock %} {% block content %}
+<!-- Page Header -->
+<section class="hero-section" style="min-height: 50vh">
+  <div class="container">
+    <div class="hero-content">
+      <h1 class="display-4 fw-bold">Get In Touch</h1>
+      <p class="lead">
+        We'd love to hear from you! Contact us about products, visits, or any
+        questions.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="py-5">
+  <div class="container">
+    <div class="row">
+      <!-- Contact Form -->
+      <div class="col-lg-8 mb-5">
+        <div class="contact-form">
+          <h2 class="h3 fw-bold text-success mb-4">Send Us a Message</h2>
+          <form method="POST" id="contactForm">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="name" class="form-label fw-semibold">Name *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  name="name"
+                  required
+                />
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="email" class="form-label fw-semibold"
+                  >Email *</label
+                >
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  name="email"
+                  required
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="phone" class="form-label fw-semibold">Phone</label>
+                <input
+                  type="tel"
+                  class="form-control"
+                  id="phone"
+                  name="phone"
+                />
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="product_interest" class="form-label fw-semibold"
+                  >Product Interest</label
+                >
+                <select
+                  class="form-select"
+                  id="product_interest"
+                  name="product_interest"
+                >
+                  <option value="">Select a category...</option>
+                  <option value="Strawberries">🍓 Strawberries</option>
+                  <option value="Asparagus">🥒 Asparagus</option>
+                  <option value="Garlic">🧄 Garlic</option>
+                  <option value="Fruits">🍎 Seasonal Fruits</option>
+                  <option value="Spices">🌿 Spices & Herbs</option>
+                  <option value="Multiple">Multiple Products</option>
+                  <option value="Farm Visit">Farm Visit</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="subject" class="form-label fw-semibold"
+                >Subject *</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="subject"
+                name="subject"
+                required
+              />
+            </div>
+            <div class="mb-4">
+              <label for="message" class="form-label fw-semibold"
+                >Message *</label
+              >
+              <textarea
+                class="form-control"
+                id="message"
+                name="message"
+                rows="5"
+                placeholder="Tell us how we can help you..."
+                required
+              ></textarea>
+            </div>
+            <button type="submit" class="btn btn-success btn-lg">
+              <i class="fas fa-paper-plane me-2"></i>Send Message
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Contact Information -->
+      <div class="col-lg-4">
+        <div class="sticky-top" style="top: 100px">
+          <!-- Contact Info Card -->
+          <div class="card border-0 shadow-custom mb-4">
+            <div class="card-body">
+              <h5 class="card-title fw-bold text-success mb-4">
+                <i class="fas fa-phone me-2"></i>Contact Information
+              </h5>
+              <div class="mb-3">
+                <div class="d-flex align-items-center mb-2">
+                  <i class="fas fa-map-marker-alt text-success me-3"></i>
+                  <div>
+                    <strong>Farm Address</strong><br />
+                    <small class="text-muted"
+                      >123 Farm Road<br />Rural Valley, State 12345</small
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <div class="d-flex align-items-center mb-2">
+                  <i class="fas fa-phone text-success me-3"></i>
+                  <div>
+                    <strong>Phone</strong><br />
+                    <small class="text-muted">(555) 123-4567</small>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <div class="d-flex align-items-center mb-2">
+                  <i class="fas fa-envelope text-success me-3"></i>
+                  <div>
+                    <strong>Email</strong><br />
+                    <small class="text-muted">hello@elliottacres.com</small>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <div class="d-flex align-items-center mb-2">
+                  <i class="fas fa-clock text-success me-3"></i>
+                  <div>
+                    <strong>Farm Hours</strong><br />
+                    <small class="text-muted">
+                      Mon-Fri: 8:00 AM - 6:00 PM<br />
+                      Sat: 8:00 AM - 4:00 PM<br />
+                      Sun: By appointment
+                    </small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Visit the Farm Card -->
+          <div class="card border-0 shadow-custom mb-4">
+            <div class="card-body">
+              <h6 class="card-title fw-bold text-primary mb-3">
+                <i class="fas fa-tractor me-2"></i>Visit the Farm
+              </h6>
+              <p class="small mb-3">
+                We welcome visitors! Schedule a farm tour to see how we grow
+                your food and meet our animals. Great for families and school
+                groups.
+              </p>
+              <ul class="list-unstyled small">
+                <li class="mb-1">
+                  <i class="fas fa-check text-success me-2"></i>Educational farm
+                  tours
+                </li>
+                <li class="mb-1">
+                  <i class="fas fa-check text-success me-2"></i>Meet the farm
+                  animals
+                </li>
+                <li class="mb-1">
+                  <i class="fas fa-check text-success me-2"></i>Learn about
+                  sustainable farming
+                </li>
+                <li class="mb-1">
+                  <i class="fas fa-check text-success me-2"></i>Seasonal
+                  workshops
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Wholesale Inquiries -->
+          <div class="card border-0 shadow-custom mb-4">
+            <div class="card-body">
+              <h6 class="card-title fw-bold text-warning mb-3">
+                <i class="fas fa-store me-2"></i>Wholesale Inquiries
+              </h6>
+              <p class="small mb-3">
+                Are you a restaurant, market, or retailer interested in our
+                products? We offer wholesale pricing for bulk orders.
+              </p>
+              <ul class="list-unstyled small">
+                <li class="mb-1">
+                  <i class="fas fa-check text-success me-2"></i>Restaurant
+                  partnerships
+                </li>
+                <li class="mb-1">
+                  <i class="fas fa-check text-success me-2"></i>Farmers market
+                  vendors
+                </li>
+                <li class="mb-1">
+                  <i class="fas fa-check text-success me-2"></i>Grocery stores
+                </li>
+                <li class="mb-1">
+                  <i class="fas fa-check text-success me-2"></i>Special event
+                  catering
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Quick Product Request -->
+          <div class="card border-0 shadow-custom">
+            <div class="card-body text-center">
+              <h6 class="card-title fw-bold mb-3">Need Something Specific?</h6>
+              <p class="small mb-3">
+                Looking for a particular product or quantity? Use our quick
+                request form.
+              </p>
+              <button
+                class="btn btn-outline-success w-100 btn-product-request"
+                data-category=""
+              >
+                <i class="fas fa-shopping-basket me-2"></i>
+                Quick Product Request
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="bg-warm py-5">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="display-5 fw-bold text-success">Frequently Asked Questions</h2>
+      <p class="lead text-muted">Quick answers to common questions</p>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-8 mx-auto">
+        <div class="accordion" id="faqAccordion">
+          <div class="accordion-item border-0 shadow-sm mb-3">
+            <h3 class="accordion-header" id="faq1">
+              <button
+                class="accordion-button collapsed fw-semibold"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapse1"
+              >
+                How do I place an order?
+              </button>
+            </h3>
+            <div
+              id="collapse1"
+              class="accordion-collapse collapse"
+              data-bs-parent="#faqAccordion"
+            >
+              <div class="accordion-body">
+                You can contact us by phone, email, or through this contact form
+                to check availability and place orders. We'll work with you to
+                coordinate pickup times or delivery if available in your area.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item border-0 shadow-sm mb-3">
+            <h3 class="accordion-header" id="faq2">
+              <button
+                class="accordion-button collapsed fw-semibold"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapse2"
+              >
+                What payment methods do you accept?
+              </button>
+            </h3>
+            <div
+              id="collapse2"
+              class="accordion-collapse collapse"
+              data-bs-parent="#faqAccordion"
+            >
+              <div class="accordion-body">
+                We accept cash, checks, and most major credit cards. For regular
+                customers, we can also set up a farm account for convenient
+                monthly billing.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item border-0 shadow-sm mb-3">
+            <h3 class="accordion-header" id="faq3">
+              <button
+                class="accordion-button collapsed fw-semibold"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapse3"
+              >
+                Do you offer delivery?
+              </button>
+            </h3>
+            <div
+              id="collapse3"
+              class="accordion-collapse collapse"
+              data-bs-parent="#faqAccordion"
+            >
+              <div class="accordion-body">
+                We offer delivery within a 15-mile radius of the farm for orders
+                over $50. Delivery is typically available twice per week.
+                Contact us to see if your area is covered.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item border-0 shadow-sm mb-3">
+            <h3 class="accordion-header" id="faq4">
+              <button
+                class="accordion-button collapsed fw-semibold"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapse4"
+              >
+                Are your products organic?
+              </button>
+            </h3>
+            <div
+              id="collapse4"
+              class="accordion-collapse collapse"
+              data-bs-parent="#faqAccordion"
+            >
+              <div class="accordion-body">
+                While we're not certified organic, we use organic growing
+                methods. We never use synthetic pesticides, herbicides, or
+                chemical fertilizers. Our focus is on soil health and
+                sustainable farming practices.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item border-0 shadow-sm mb-3">
+            <h3 class="accordion-header" id="faq5">
+              <button
+                class="accordion-button collapsed fw-semibold"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapse5"
+              >
+                Can I visit the farm?
+              </button>
+            </h3>
+            <div
+              id="collapse5"
+              class="accordion-collapse collapse"
+              data-bs-parent="#faqAccordion"
+            >
+              <div class="accordion-body">
+                Absolutely! We love having visitors. Please contact us in
+                advance to schedule a tour. We offer educational tours for
+                families, school groups, and anyone interested in learning about
+                sustainable farming.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item border-0 shadow-sm">
+            <h3 class="accordion-header" id="faq6">
+              <button
+                class="accordion-button collapsed fw-semibold"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapse6"
+              >
+                How far in advance should I order?
+              </button>
+            </h3>
+            <div
+              id="collapse6"
+              class="accordion-collapse collapse"
+              data-bs-parent="#faqAccordion"
+            >
+              <div class="accordion-body">
+                For regular produce, 24-48 hours notice is usually sufficient.
+                For special occasions, large quantities, or specific varieties,
+                we recommend ordering at least a week in advance. Some seasonal
+                items may need longer lead times.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Map Section (Placeholder) -->
+<section class="py-5">
+  <div class="container">
+    <div class="text-center mb-4">
+      <h2 class="h3 fw-bold text-success">Find Us</h2>
+      <p class="text-muted">Located in the heart of Rural Valley</p>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="card border-0 shadow-custom">
+          <div class="card-body p-0">
+            <!-- This would be replaced with an actual map integration -->
+            <div
+              class="bg-light d-flex align-items-center justify-content-center"
+              style="height: 300px; border-radius: 15px"
+            >
+              <div class="text-center">
+                <i class="fas fa-map-marker-alt text-success fa-3x mb-3"></i>
+                <h5 class="fw-bold mb-2">Elliott Acres Farm</h5>
+                <p class="text-muted mb-0">
+                  123 Farm Road, Rural Valley, State 12345
+                </p>
+                <a
+                  href="https://maps.google.com"
+                  target="_blank"
+                  class="btn btn-success btn-sm mt-3"
+                >
+                  <i class="fas fa-directions me-2"></i>Get Directions
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
