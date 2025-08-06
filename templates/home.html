@@ -1,400 +1,423 @@
 {% extends "base.html" %} {% block title %}Elliott Acres Farm - Fresh Local
 Produce{% endblock %} {% block content %}
-<!-- Hero Section -->
-<section class="hero-section">
-  <div class="container">
-    <div class="hero-content">
-      <h1 class="display-3 fw-bold">Fresh From Our Farm<br />To Your Table</h1>
-      <p class="lead">
-        Discover the vibrant taste of locally grown produce from Elliott Acres
-        Farm. Fresh strawberries, crisp asparagus, aromatic garlic, and so much
-        more.
-      </p>
-      <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
-        <a
-          href="{{ url_for('products') }}"
-          class="btn btn-success btn-hero btn-lg"
-        >
-          <i class="fas fa-seedling me-2"></i>Shop Our Products
-        </a>
-        <a
-          href="{{ url_for('contact') }}"
-          class="btn btn-outline-light btn-hero btn-lg"
-        >
-          <i class="fas fa-envelope me-2"></i>Get In Touch
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- News Carousel -->
-<section class="news-carousel">
-  <div class="container">
-    <div class="text-center mb-5">
-      <h2 class="display-5 fw-bold text-success">Latest From The Farm</h2>
-      <p class="lead text-muted">
-        Stay updated with our farm activities, seasonal highlights, and fresh
-        harvest news
-      </p>
-    </div>
-
-    <div id="newsCarousel" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-indicators">
-        {% for post in posts %}
-        <button
-          type="button"
-          data-bs-target="#newsCarousel"
-          data-bs-slide-to="{{ loop.index0 }}"
-          class="{% if loop.first %}active{% endif %}"
-        ></button>
-        {% endfor %}
-      </div>
-
-      <div class="carousel-inner">
-        {% for post in posts %}
-        <div class="carousel-item {% if loop.first %}active{% endif %}">
-          <img
-            src="{{ post.image_url or '/static/images/default-blog.jpg' }}"
-            class="d-block w-100"
-            alt="{{ post.title }}"
-          />
-          <div class="carousel-caption d-none d-md-block">
-            <h5>{{ post.title }}</h5>
-            <p>{{ post.content[:150] }}...</p>
-            <a href="{{ url_for('blog') }}" class="btn btn-light btn-sm"
-              >Read More</a
-            >
-          </div>
-        </div>
-        {% endfor %} {% if not posts %}
-        <div class="carousel-item active">
-          <img
-            src="/static/images/farm-default.jpg"
-            class="d-block w-100"
-            alt="Welcome to Elliott Acres"
-          />
-          <div class="carousel-caption d-none d-md-block">
-            <h5>Welcome to Elliott Acres Farm</h5>
-            <p>
-              Fresh, locally grown produce from our family farm to your table.
-            </p>
-            <a href="{{ url_for('about') }}" class="btn btn-light btn-sm"
-              >Learn More</a
-            >
-          </div>
-        </div>
-        {% endif %}
-      </div>
-
-      <button
-        class="carousel-control-prev"
-        type="button"
-        data-bs-target="#newsCarousel"
-        data-bs-slide="prev"
-      >
-        <span class="carousel-control-prev-icon"></span>
-      </button>
-      <button
-        class="carousel-control-next"
-        type="button"
-        data-bs-target="#newsCarousel"
-        data-bs-slide="next"
-      >
-        <span class="carousel-control-next-icon"></span>
-      </button>
-    </div>
-  </div>
-</section>
-
-<!-- Strawberries Section -->
-<section class="product-showcase">
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-lg-6 mb-4 mb-lg-0">
-        <div class="product-content">
-          <h2 class="display-5 fw-bold">
-            Our <span class="text-strawberry">Strawberries</span>
-          </h2>
-          <p class="lead mb-4">
-            Sweet, juicy strawberries bursting with flavor and nutrients. Picked
-            fresh daily at peak ripeness, our strawberries are perfect for
-            eating fresh, making jams, or adding to your favorite recipes.
-          </p>
-          <ul class="list-unstyled mb-4">
-            <li>
-              <i class="fas fa-check text-success me-2"></i>Pesticide-free
-              growing methods
-            </li>
-            <li>
-              <i class="fas fa-check text-success me-2"></i>Picked fresh daily
-            </li>
-            <li>
-              <i class="fas fa-check text-success me-2"></i>Multiple varieties
-              available
-            </li>
-            <li>
-              <i class="fas fa-check text-success me-2"></i>Perfect for jams and
-              desserts
-            </li>
-          </ul>
-          <button class="btn btn-product-request" data-category="Strawberries">
-            <i class="fas fa-shopping-basket me-2"></i>Sign Me Up For Some!
-          </button>
-        </div>
-      </div>
-      <div class="col-lg-6">
-        <img
-          src="/static/images/strawberries-showcase.jpg"
-          alt="Fresh Strawberries"
-          class="img-fluid product-image"
-        />
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Asparagus Section -->
-<section class="product-showcase">
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-lg-6 order-lg-2 mb-4 mb-lg-0">
-        <div class="product-content">
-          <h2 class="display-5 fw-bold">
-            Fresh <span class="text-asparagus">Asparagus</span>
-          </h2>
-          <p class="lead mb-4">
-            Tender, crisp asparagus spears harvested at the perfect moment. Our
-            asparagus is known for its exceptional flavor and texture, making it
-            a favorite among local chefs and home cooks alike.
-          </p>
-          <ul class="list-unstyled mb-4">
-            <li>
-              <i class="fas fa-check text-success me-2"></i>Harvested daily in
-              season
-            </li>
-            <li>
-              <i class="fas fa-check text-success me-2"></i>Tender and flavorful
-            </li>
-            <li>
-              <i class="fas fa-check text-success me-2"></i>Rich in vitamins and
-              minerals
-            </li>
-            <li>
-              <i class="fas fa-check text-success me-2"></i>Perfect for grilling
-              or roasting
-            </li>
-          </ul>
-          <button class="btn btn-product-request" data-category="Asparagus">
-            <i class="fas fa-shopping-basket me-2"></i>Sign Me Up For Some!
-          </button>
-        </div>
-      </div>
-      <div class="col-lg-6 order-lg-1">
-        <img
-          src="/static/images/asparagus-showcase.jpg"
-          alt="Fresh Asparagus"
-          class="img-fluid product-image"
-        />
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Garlic Section -->
-<section class="product-showcase">
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-lg-6 mb-4 mb-lg-0">
-        <div class="product-content">
-          <h2 class="display-5 fw-bold">
-            Aromatic <span class="text-warning">Garlic</span>
-          </h2>
-          <p class="lead mb-4">
-            Premium hardneck garlic with intense flavor and aroma. Our garlic
-            varieties range from mild and sweet to bold and spicy, offering
-            something for every palate and culinary application.
-          </p>
-          <ul class="list-unstyled mb-4">
-            <li>
-              <i class="fas fa-check text-success me-2"></i>Multiple heirloom
-              varieties
-            </li>
-            <li>
-              <i class="fas fa-check text-success me-2"></i>Cured for long-term
-              storage
-            </li>
-            <li>
-              <i class="fas fa-check text-success me-2"></i>Rich, complex
-              flavors
-            </li>
-            <li>
-              <i class="fas fa-check text-success me-2"></i>Scapes available in
-              season
-            </li>
-          </ul>
-          <button class="btn btn-product-request" data-category="Garlic">
-            <i class="fas fa-shopping-basket me-2"></i>Sign Me Up For Some!
-          </button>
-        </div>
-      </div>
-      <div class="col-lg-6">
-        <img
-          src="/static/images/garlic-showcase.jpg"
-          alt="Fresh Garlic"
-          class="img-fluid product-image"
-        />
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Fruits Section -->
-<section class="product-showcase">
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-lg-6 order-lg-2 mb-4 mb-lg-0">
-        <div class="product-content">
-          <h2 class="display-5 fw-bold">
-            Seasonal <span class="text-fruit">Fruits</span>
-          </h2>
-          <p class="lead mb-4">
-            A rotating selection of seasonal fruits grown with care and
-            attention to quality. From summer berries to fall apples, we offer
-            the freshest fruits at their peak of flavor.
-          </p>
-          <ul class="list-unstyled mb-4">
-            <li>
-              <i class="fas fa-check text-success me-2"></i>Seasonal variety
-              selection
-            </li>
-            <li>
-              <i class="fas fa-check text-success me-2"></i>Tree-ripened for
-              best flavor
-            </li>
-            <li>
-              <i class="fas fa-check text-success me-2"></i>No artificial
-              ripening
-            </li>
-            <li>
-              <i class="fas fa-check text-success me-2"></i>Perfect for fresh
-              eating
-            </li>
-          </ul>
-          <button class="btn btn-product-request" data-category="Fruits">
-            <i class="fas fa-shopping-basket me-2"></i>Sign Me Up For Some!
-          </button>
-        </div>
-      </div>
-      <div class="col-lg-6 order-lg-1">
-        <img
-          src="/static/images/fruits-showcase.jpg"
-          alt="Seasonal Fruits"
-          class="img-fluid product-image"
-        />
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Spices Section -->
-<section class="product-showcase">
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-lg-6 mb-4 mb-lg-0">
-        <div class="product-content">
-          <h2 class="display-5 fw-bold">
-            Farm-Fresh <span class="text-spice">Spices</span>
-          </h2>
-          <p class="lead mb-4">
-            Handcrafted spice blends and dried herbs from our own garden. Each
-            blend is carefully created to enhance your culinary creations with
-            the pure, intense flavors of farm-fresh ingredients.
-          </p>
-          <ul class="list-unstyled mb-4">
-            <li>
-              <i class="fas fa-check text-success me-2"></i>Hand-harvested and
-              dried
-            </li>
-            <li>
-              <i class="fas fa-check text-success me-2"></i>Custom spice blends
-            </li>
-            <li>
-              <i class="fas fa-check text-success me-2"></i>No artificial
-              additives
-            </li>
-            <li>
-              <i class="fas fa-check text-success me-2"></i>Peak potency
-              guaranteed
-            </li>
-          </ul>
-          <button class="btn btn-product-request" data-category="Spices">
-            <i class="fas fa-shopping-basket me-2"></i>Sign Me Up For Some!
-          </button>
-        </div>
-      </div>
-      <div class="col-lg-6">
-        <img
-          src="/static/images/spices-showcase.jpg"
-          alt="Farm Spices"
-          class="img-fluid product-image"
-        />
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Call to Action -->
-<section class="bg-success text-white py-5">
-  <div class="container text-center">
-    <div class="row justify-content-center">
-      <div class="col-lg-8">
-        <h2 class="display-5 fw-bold mb-4">Ready to Taste the Difference?</h2>
-        <p class="lead mb-4">
-          Experience the superior quality and flavor of truly fresh, locally
-          grown produce. Contact us today to learn about availability and place
-          your order.
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="display-3 fw-bold">
+          Fresh From Our Farm<br />To Your Table
+        </h1>
+        <p class="lead">
+          Discover the vibrant taste of locally grown produce from Elliott Acres
+          Farm. Fresh strawberries, crisp asparagus, aromatic garlic, and so
+          much more.
         </p>
         <div
           class="d-flex flex-column flex-sm-row gap-3 justify-content-center"
         >
-          <a href="{{ url_for('contact') }}" class="btn btn-light btn-lg">
-            <i class="fas fa-phone me-2"></i>Contact Us Today
+          <a
+            href="{{ url_for('products') }}"
+            class="btn btn-success btn-hero btn-lg"
+          >
+            <i class="fas fa-seedling me-2"></i>Shop Our Products
           </a>
-          <a href="{{ url_for('about') }}" class="btn btn-outline-light btn-lg">
-            <i class="fas fa-users me-2"></i>Meet the Farmers
+          <a
+            href="{{ url_for('contact') }}"
+            class="btn btn-outline-light btn-hero btn-lg"
+          >
+            <i class="fas fa-envelope me-2"></i>Get In Touch
           </a>
         </div>
       </div>
     </div>
-  </div>
-</section>
-{% endblock %} {% block scripts %}
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    // Initialize product showcase animations
-    const showcases = document.querySelectorAll(".product-showcase");
+  </section>
 
-    const showcaseObserver = new IntersectionObserver(
-      function (entries) {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.style.opacity = "1";
-            entry.target.style.transform = "translateY(0)";
-          }
-        });
-      },
-      {
-        threshold: 0.2,
-      }
-    );
+  <!-- News Carousel -->
+  <section class="news-carousel">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="display-5 fw-bold text-success">Latest From The Farm</h2>
+        <p class="lead text-muted">
+          Stay updated with our farm activities, seasonal highlights, and fresh
+          harvest news
+        </p>
+      </div>
 
-    showcases.forEach((showcase) => {
-      showcase.style.opacity = "0";
-      showcase.style.transform = "translateY(50px)";
-      showcase.style.transition = "all 0.8s ease-out";
-      showcaseObserver.observe(showcase);
+      <div id="newsCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          {% for post in posts %}
+          <button
+            type="button"
+            data-bs-target="#newsCarousel"
+            data-bs-slide-to="{{ loop.index0 }}"
+            class="{% if loop.first %}active{% endif %}"
+          ></button>
+          {% endfor %}
+        </div>
+
+        <div class="carousel-inner">
+          {% for post in posts %}
+          <div class="carousel-item {% if loop.first %}active{% endif %}">
+            <img
+              src="{{ post.image_url or 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80' }}"
+              class="d-block w-100"
+              alt="{{ post.title }}"
+            />
+            <div class="carousel-caption d-none d-md-block">
+              <h5>{{ post.title }}</h5>
+              <p>{{ post.content[:150] }}...</p>
+              <a href="{{ url_for('blog') }}" class="btn btn-light btn-sm"
+                >Read More</a
+              >
+            </div>
+          </div>
+          {% endfor %} {% if not posts %}
+          <div class="carousel-item active">
+            <img
+              src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80"
+              class="d-block w-100"
+              alt="Welcome to Elliott Acres"
+            />
+            <div class="carousel-caption d-none d-md-block">
+              <h5>Welcome to Elliott Acres Farm</h5>
+              <p>
+                Fresh, locally grown produce from our family farm to your table.
+              </p>
+              <a href="{{ url_for('about') }}" class="btn btn-light btn-sm"
+                >Learn More</a
+              >
+            </div>
+          </div>
+          {% endif %}
+        </div>
+
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#newsCarousel"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#newsCarousel"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon"></span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Strawberries Section -->
+  <section class="product-showcase">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 mb-4 mb-lg-0">
+          <div class="product-content">
+            <h2 class="display-5 fw-bold">
+              Our <span class="text-strawberry">Strawberries</span>
+            </h2>
+            <p class="lead mb-4">
+              Sweet, juicy strawberries bursting with flavor and nutrients.
+              Picked fresh daily at peak ripeness, our strawberries are perfect
+              for eating fresh, making jams, or adding to your favorite recipes.
+            </p>
+            <ul class="list-unstyled mb-4">
+              <li>
+                <i class="fas fa-check text-success me-2"></i>Pesticide-free
+                growing methods
+              </li>
+              <li>
+                <i class="fas fa-check text-success me-2"></i>Picked fresh daily
+              </li>
+              <li>
+                <i class="fas fa-check text-success me-2"></i>Multiple varieties
+                available
+              </li>
+              <li>
+                <i class="fas fa-check text-success me-2"></i>Perfect for jams
+                and desserts
+              </li>
+            </ul>
+            <button
+              class="btn btn-product-request"
+              data-category="Strawberries"
+            >
+              <i class="fas fa-shopping-basket me-2"></i>Sign Me Up For Some!
+            </button>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <a href="{{ url_for('product_category', category='Strawberries') }}">
+            <img
+              src="{{ url_for('static', filename='images/Strawberries photo 1.png') }}"
+              alt="Fresh Strawberries"
+              class="img-fluid product-image"
+            />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Asparagus Section -->
+  <section class="product-showcase">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 order-lg-2 mb-4 mb-lg-0">
+          <div class="product-content">
+            <h2 class="display-5 fw-bold">
+              Fresh <span class="text-asparagus">Asparagus</span>
+            </h2>
+            <p class="lead mb-4">
+              Tender, crisp asparagus spears harvested at the perfect moment.
+              Our asparagus is known for its exceptional flavor and texture,
+              making it a favorite among local chefs and home cooks alike.
+            </p>
+            <ul class="list-unstyled mb-4">
+              <li>
+                <i class="fas fa-check text-success me-2"></i>Harvested daily in
+                season
+              </li>
+              <li>
+                <i class="fas fa-check text-success me-2"></i>Tender and
+                flavorful
+              </li>
+              <li>
+                <i class="fas fa-check text-success me-2"></i>Rich in vitamins
+                and minerals
+              </li>
+              <li>
+                <i class="fas fa-check text-success me-2"></i>Perfect for
+                grilling or roasting
+              </li>
+            </ul>
+            <button class="btn btn-product-request" data-category="Asparagus">
+              <i class="fas fa-shopping-basket me-2"></i>Sign Me Up For Some!
+            </button>
+          </div>
+        </div>
+        <div class="col-lg-6 order-lg-1">
+          <a href="{{ url_for('product_category', category='Asparagus') }}">
+            <img
+              src="{{ url_for('static', filename='images/asparagus.jpg') }}"
+              alt="Fresh Asparagus"
+              class="img-fluid product-image"
+            />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Garlic Section -->
+  <section class="product-showcase">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 mb-4 mb-lg-0">
+          <div class="product-content">
+            <h2 class="display-5 fw-bold">
+              Aromatic <span class="text-warning">Garlic</span>
+            </h2>
+            <p class="lead mb-4">
+              Premium hardneck garlic with intense flavor and aroma. Our garlic
+              varieties range from mild and sweet to bold and spicy, offering
+              something for every palate and culinary application.
+            </p>
+            <ul class="list-unstyled mb-4">
+              <li>
+                <i class="fas fa-check text-success me-2"></i>Multiple heirloom
+                varieties
+              </li>
+              <li>
+                <i class="fas fa-check text-success me-2"></i>Cured for
+                long-term storage
+              </li>
+              <li>
+                <i class="fas fa-check text-success me-2"></i>Rich, complex
+                flavors
+              </li>
+              <li>
+                <i class="fas fa-check text-success me-2"></i>Scapes available
+                in season
+              </li>
+            </ul>
+            <button class="btn btn-product-request" data-category="Garlic">
+              <i class="fas fa-shopping-basket me-2"></i>Sign Me Up For Some!
+            </button>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <a href="{{ url_for('product_category', category='Garlic') }}">
+            <img
+              src="{{ url_for('static', filename='images/garlic.jpg') }}"
+              alt="Fresh Garlic"
+              class="img-fluid product-image"
+            />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fruits Section -->
+  <section class="product-showcase">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 order-lg-2 mb-4 mb-lg-0">
+          <div class="product-content">
+            <h2 class="display-5 fw-bold">
+              Seasonal <span class="text-fruit">Fruits</span>
+            </h2>
+            <p class="lead mb-4">
+              A rotating selection of seasonal fruits grown with care and
+              attention to quality. From summer berries to fall apples, we offer
+              the freshest fruits at their peak of flavor.
+            </p>
+            <ul class="list-unstyled mb-4">
+              <li>
+                <i class="fas fa-check text-success me-2"></i>Seasonal variety
+                selection
+              </li>
+              <li>
+                <i class="fas fa-check text-success me-2"></i>Tree-ripened for
+                best flavor
+              </li>
+              <li>
+                <i class="fas fa-check text-success me-2"></i>No artificial
+                ripening
+              </li>
+              <li>
+                <i class="fas fa-check text-success me-2"></i>Perfect for fresh
+                eating
+              </li>
+            </ul>
+            <button class="btn btn-product-request" data-category="Fruits">
+              <i class="fas fa-shopping-basket me-2"></i>Sign Me Up For Some!
+            </button>
+          </div>
+        </div>
+        <div class="col-lg-6 order-lg-1">
+          <a href="{{ url_for('product_category', category='Fruits') }}">
+            <img
+              src="{{ url_for('static', filename='images/apples.jpg') }}"
+              alt="Seasonal Fruits"
+              class="img-fluid product-image"
+            />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Spices Section -->
+  <section class="product-showcase">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 mb-4 mb-lg-0">
+          <div class="product-content">
+            <h2 class="display-5 fw-bold">
+              Farm-Fresh <span class="text-spice">Spices</span>
+            </h2>
+            <p class="lead mb-4">
+              Handcrafted spice blends and dried herbs from our own garden. Each
+              blend is carefully created to enhance your culinary creations with
+              the pure, intense flavors of farm-fresh ingredients.
+            </p>
+            <ul class="list-unstyled mb-4">
+              <li>
+                <i class="fas fa-check text-success me-2"></i>Hand-harvested and
+                dried
+              </li>
+              <li>
+                <i class="fas fa-check text-success me-2"></i>Custom spice
+                blends
+              </li>
+              <li>
+                <i class="fas fa-check text-success me-2"></i>No artificial
+                additives
+              </li>
+              <li>
+                <i class="fas fa-check text-success me-2"></i>Peak potency
+                guaranteed
+              </li>
+            </ul>
+            <button class="btn btn-product-request" data-category="Spices">
+              <i class="fas fa-shopping-basket me-2"></i>Sign Me Up For Some!
+            </button>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <a href="{{ url_for('product_category', category='Spices') }}">
+            <img
+              src="{{ url_for('static', filename='images/spices.jpg') }}"
+              alt="Farm Spices"
+              class="img-fluid product-image"
+            />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="bg-success text-white py-5">
+    <div class="container text-center">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <h2 class="display-5 fw-bold mb-4">Ready to Taste the Difference?</h2>
+          <p class="lead mb-4">
+            Experience the superior quality and flavor of truly fresh, locally
+            grown produce. Contact us today to learn about availability and
+            place your order.
+          </p>
+          <div
+            class="d-flex flex-column flex-sm-row gap-3 justify-content-center"
+          >
+            <a href="{{ url_for('contact') }}" class="btn btn-light btn-lg">
+              <i class="fas fa-phone me-2"></i>Contact Us Today
+            </a>
+            <a
+              href="{{ url_for('about') }}"
+              class="btn btn-outline-light btn-lg"
+            >
+              <i class="fas fa-users me-2"></i>Meet the Farmers
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endblock %} {% block scripts %}
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Initialize product showcase animations
+      const showcases = document.querySelectorAll(".product-showcase");
+
+      const showcaseObserver = new IntersectionObserver(
+        function (entries) {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.style.opacity = "1";
+              entry.target.style.transform = "translateY(0)";
+            }
+          });
+        },
+        {
+          threshold: 0.2,
+        }
+      );
+
+      showcases.forEach((showcase) => {
+        showcase.style.opacity = "0";
+        showcase.style.transform = "translateY(50px)";
+        showcase.style.transition = "all 0.8s ease-out";
+        showcaseObserver.observe(showcase);
+      });
     });
-  });
-</script>
-{% endblock %}
+  </script>
+  {% endblock %}
+</div>
