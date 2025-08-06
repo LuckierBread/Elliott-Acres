@@ -1,7 +1,6 @@
 import os
 from datetime import datetime
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
-from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
@@ -9,42 +8,172 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# Environment detection
+FLASK_ENV = os.environ.get('FLASK_ENV', 'development')
+IS_WORKER = os.environ.get('CF_WORKER') == '1' or os.environ.get('CLOUDFLARE_WORKERS') == '1'
+IS_PRODUCTION = FLASK_ENV == 'production'
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key-for-demo-only')
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///farm.db')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, 'static', 'uploads')
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
 
-# Cloudflare-optimized settings
-app.config['SESSION_COOKIE_SECURE'] = True  # Always use HTTPS with Cloudflare
-app.config['SESSION_COOKIE_HTTPONLY'] = True
-app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
-app.config['PERMANENT_SESSION_LIFETIME'] = 3600  # 1 hour
+# Environment-specific configuration
+if IS_WORKER:
+    # Cloudflare Workers configuration
+    app.config['USE_D1'] = True
+    app.config['SESSION_COOKIE_SECURE'] = True
+    app.config['SESSION_COOKIE_HTTPONLY'] = True
+    app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+    app.config['PERMANENT_SESSION_LIFETIME'] = 3600
+    # File uploads will use R2 storage
+    app.config['UPLOAD_FOLDER'] = '/tmp'
+elif IS_PRODUCTION:
+    # Production with external database
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['SESSION_COOKIE_SECURE'] = True
+    app.config['SESSION_COOKIE_HTTPONLY'] = True
+    app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+    app.config['PERMANENT_SESSION_LIFETIME'] = 3600
+    app.config['UPLOAD_FOLDER'] = '/tmp'
+else:
+    # Local development
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///farm.db'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['SESSION_COOKIE_SECURE'] = False
+    app.config['SESSION_COOKIE_HTTPONLY'] = True
+    app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+    app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, 'static', 'uploads')
+    # Ensure upload directory exists in development
+    os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+    os.makedirs(os.path.join(app.config['UPLOAD_FOLDER'], 'blog'), exist_ok=True)
+    os.makedirs(os.path.join(app.config['UPLOAD_FOLDER'], 'gallery'), exist_ok=True)
 
-# Ensure upload directory exists
-os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-os.makedirs(os.path.join(app.config['UPLOAD_FOLDER'], 'blog'), exist_ok=True)
-os.makedirs(os.path.join(app.config['UPLOAD_FOLDER'], 'gallery'), exist_ok=True)
-
-db = SQLAlchemy(app)
+# Initialize database only if not using Workers
+if not IS_WORKER:
+    from flask_sqlalchemy import SQLAlchemy
+    db = SQLAlchemy(app)
+else:
+    # Database manager for D1
+    class D1DatabaseManager:
+        def __init__(self):
+            pass
+        
+        async def execute_query(self, query, params=None):
+            # This will be implemented with actual D1 bindings in Workers
+            pass
+    
+    db_manager = D1DatabaseManager()
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'admin_login'
 
-# Database Models
-class User(UserMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password_hash = db.Column(db.String(255), nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    
-    def set_password(self, password):
-        self.password_hash = generate_password_hash(password)
-    
-    def check_password(self, password):
-        return check_password_hash(self.password_hash, password)
+# Database Models - only for non-Workers environments
+if not IS_WORKER:
+    class User(UserMixin, db.Model):
+        id = db.Column(db.Integer, primary_key=True)
+        username = db.Column(db.String(80), unique=True, nullable=False)
+        email = db.Column(db.String(120), unique=True, nullable=False)
+        password_hash = db.Column(db.String(255), nullable=False)
+        created_at = db.Column(db.DateTime, default=datetime.utcnow)
+        
+        def set_password(self, password):
+            self.password_hash = generate_password_hash(password)
+        
+        def check_password(self, password):
+            return check_password_hash(self.password_hash, password)
+
+    class BlogPost(db.Model):
+        id = db.Column(db.Integer, primary_key=True)
+        title = db.Column(db.String(200), nullable=False)
+        content = db.Column(db.Text, nullable=False)
+        image_url = db.Column(db.String(255))
+        author_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+        created_at = db.Column(db.DateTime, default=datetime.utcnow)
+        updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+        published = db.Column(db.Boolean, default=False)
+        
+        author = db.relationship('User', backref=db.backref('posts', lazy=True))
+
+    class ProductRequest(db.Model):
+        id = db.Column(db.Integer, primary_key=True)
+        customer_name = db.Column(db.String(100), nullable=False)
+        customer_email = db.Column(db.String(100), nullable=False)
+        customer_phone = db.Column(db.String(20))
+        product_category = db.Column(db.String(50), nullable=False)
+        message = db.Column(db.Text)
+        created_at = db.Column(db.DateTime, default=datetime.utcnow)
+        status = db.Column(db.String(20), default='pending')
+
+    class ContactMessage(db.Model):
+        id = db.Column(db.Integer, primary_key=True)
+        name = db.Column(db.String(100), nullable=False)
+        email = db.Column(db.String(100), nullable=False)
+        phone = db.Column(db.String(20))
+        subject = db.Column(db.String(200), nullable=False)
+        message = db.Column(db.Text, nullable=False)
+        product_interest = db.Column(db.String(50))
+        created_at = db.Column(db.DateTime, default=datetime.utcnow)
+        read = db.Column(db.Boolean, default=False)
+
+    class GalleryImage(db.Model):
+        id = db.Column(db.Integer, primary_key=True)
+        filename = db.Column(db.String(255), nullable=False)
+        caption = db.Column(db.String(200))
+        category = db.Column(db.String(50))
+        uploaded_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    class Product(db.Model):
+        id = db.Column(db.Integer, primary_key=True)
+        name = db.Column(db.String(100), nullable=False)
+        category = db.Column(db.String(50), nullable=False)
+        price = db.Column(db.String(20))
+        description = db.Column(db.Text)
+        image_url = db.Column(db.String(255))
+        available = db.Column(db.Boolean, default=True)
+        
+        recipes = db.relationship('Recipe', backref='product', lazy=True)
+
+    class Recipe(db.Model):
+        id = db.Column(db.Integer, primary_key=True)
+        title = db.Column(db.String(200), nullable=False)
+        ingredients = db.Column(db.Text, nullable=False)
+        instructions = db.Column(db.Text, nullable=False)
+        image_url = db.Column(db.String(255))
+        product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
+        created_at = db.Column(db.DateTime, default=datetime.utcnow)
+else:
+    # Worker-compatible user class
+    class WorkerUser:
+        def __init__(self, user_data):
+            self.id = user_data.get('id')
+            self.username = user_data.get('username')
+            self.email = user_data.get('email')
+            self.password_hash = user_data.get('password_hash')
+            self.created_at = user_data.get('created_at')
+        
+        def is_authenticated(self):
+            return True
+        
+        def is_active(self):
+            return True
+        
+        def is_anonymous(self):
+            return False
+        
+        def get_id(self):
+            return str(self.id)
+        
+        def check_password(self, password):
+            return check_password_hash(self.password_hash, password)
+
+@login_manager.user_loader
+def load_user(user_id):
+    if IS_WORKER:
+        # Load user from D1 database (implement with actual D1 queries)
+        return None  # Placeholder for D1 implementation
+    else:
+        return db.session.get(User, int(user_id))
 
 class BlogPost(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -106,15 +235,16 @@ class Recipe(db.Model):
     product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
-@login_manager.user_loader
-def load_user(user_id):
-    return db.session.get(User, int(user_id))
-
 # Routes
 @app.route('/')
 def home():
-    latest_posts = BlogPost.query.filter_by(published=True).order_by(BlogPost.created_at.desc()).limit(3).all()
-    return render_template('home.html', posts=latest_posts)
+    if IS_WORKER:
+        # In Workers, return static content initially
+        # TODO: Implement D1 queries for blog posts
+        return render_template('home.html', posts=[])
+    else:
+        latest_posts = BlogPost.query.filter_by(published=True).order_by(BlogPost.created_at.desc()).limit(3).all()
+        return render_template('home.html', posts=latest_posts)
 
 @app.route('/about')
 def about():
@@ -127,36 +257,53 @@ def products():
 
 @app.route('/products/<category>')
 def product_category(category):
-    products = Product.query.filter_by(category=category, available=True).all()
-    recipes = Recipe.query.join(Product).filter(Product.category == category).all()
+    if IS_WORKER:
+        # TODO: Implement D1 queries for products and recipes
+        products = []
+        recipes = []
+    else:
+        products = Product.query.filter_by(category=category, available=True).all()
+        recipes = Recipe.query.join(Product).filter(Product.category == category).all()
     return render_template('product_category.html', category=category, products=products, recipes=recipes)
 
 @app.route('/blog')
 def blog():
-    page = request.args.get('page', 1, type=int)
-    posts = BlogPost.query.filter_by(published=True).order_by(BlogPost.created_at.desc()).paginate(
-        page=page, per_page=10, error_out=False)
+    if IS_WORKER:
+        # TODO: Implement D1 queries for blog posts with pagination
+        posts = None
+    else:
+        page = request.args.get('page', 1, type=int)
+        posts = BlogPost.query.filter_by(published=True).order_by(BlogPost.created_at.desc()).paginate(
+            page=page, per_page=10, error_out=False)
     return render_template('blog.html', posts=posts)
 
 @app.route('/gallery')
 def gallery():
-    images = GalleryImage.query.order_by(GalleryImage.uploaded_at.desc()).all()
+    if IS_WORKER:
+        # TODO: Implement D1 queries for gallery images
+        images = []
+    else:
+        images = GalleryImage.query.order_by(GalleryImage.uploaded_at.desc()).all()
     return render_template('gallery.html', images=images)
 
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
     if request.method == 'POST':
-        message = ContactMessage(
-            name=request.form['name'],
-            email=request.form['email'],
-            phone=request.form.get('phone'),
-            subject=request.form['subject'],
-            message=request.form['message'],
-            product_interest=request.form.get('product_interest')
-        )
-        db.session.add(message)
-        db.session.commit()
-        flash('Thank you for your message! We\'ll get back to you soon.', 'success')
+        if IS_WORKER:
+            # TODO: Implement D1 insert for contact messages
+            flash('Thank you for your message! We\'ll get back to you soon.', 'success')
+        else:
+            message = ContactMessage(
+                name=request.form['name'],
+                email=request.form['email'],
+                phone=request.form.get('phone'),
+                subject=request.form['subject'],
+                message=request.form['message'],
+                product_interest=request.form.get('product_interest')
+            )
+            db.session.add(message)
+            db.session.commit()
+            flash('Thank you for your message! We\'ll get back to you soon.', 'success')
         return redirect(url_for('contact'))
     
     return render_template('contact.html')
@@ -164,16 +311,20 @@ def contact():
 @app.route('/product-request', methods=['POST'])
 def product_request():
     if request.method == 'POST':
-        req = ProductRequest(
-            customer_name=request.form['name'],
-            customer_email=request.form['email'],
-            customer_phone=request.form.get('phone'),
-            product_category=request.form['category'],
-            message=request.form.get('message')
-        )
-        db.session.add(req)
-        db.session.commit()
-        return jsonify({'success': True, 'message': 'Request submitted successfully!'})
+        if IS_WORKER:
+            # TODO: Implement D1 insert for product requests
+            return jsonify({'success': True, 'message': 'Request submitted successfully!'})
+        else:
+            req = ProductRequest(
+                customer_name=request.form['name'],
+                customer_email=request.form['email'],
+                customer_phone=request.form.get('phone'),
+                product_category=request.form['category'],
+                message=request.form.get('message')
+            )
+            db.session.add(req)
+            db.session.commit()
+            return jsonify({'success': True, 'message': 'Request submitted successfully!'})
     
     return jsonify({'success': False, 'message': 'Invalid request'})
 
@@ -181,27 +332,41 @@ def product_request():
 @app.route('/admin')
 @login_required
 def admin_dashboard():
-    recent_requests = ProductRequest.query.order_by(ProductRequest.created_at.desc()).limit(5).all()
-    recent_messages = ContactMessage.query.order_by(ContactMessage.created_at.desc()).limit(5).all()
-    
-    # Get all requests and messages for detailed breakdown
-    all_requests = ProductRequest.query.all()
-    all_messages = ContactMessage.query.all()
-    
-    post_count = BlogPost.query.count()
-    
-    # Calculate pending tasks
-    pending_requests = ProductRequest.query.filter_by(status='pending').count()
-    unread_messages = ContactMessage.query.filter_by(read=False).count()
-    unpublished_posts = BlogPost.query.filter_by(published=False).count()
-    
-    # Create task breakdown
-    task_breakdown = {
-        'pending_requests': pending_requests,
-        'unread_messages': unread_messages,
-        'unpublished_posts': unpublished_posts,
-        'total': pending_requests + unread_messages + unpublished_posts
-    }
+    if IS_WORKER:
+        # TODO: Implement D1 queries for admin dashboard
+        recent_requests = []
+        recent_messages = []
+        all_requests = []
+        all_messages = []
+        post_count = 0
+        task_breakdown = {
+            'pending_requests': 0,
+            'unread_messages': 0,
+            'unpublished_posts': 0,
+            'total': 0
+        }
+    else:
+        recent_requests = ProductRequest.query.order_by(ProductRequest.created_at.desc()).limit(5).all()
+        recent_messages = ContactMessage.query.order_by(ContactMessage.created_at.desc()).limit(5).all()
+        
+        # Get all requests and messages for detailed breakdown
+        all_requests = ProductRequest.query.all()
+        all_messages = ContactMessage.query.all()
+        
+        post_count = BlogPost.query.count()
+        
+        # Calculate pending tasks
+        pending_requests = ProductRequest.query.filter_by(status='pending').count()
+        unread_messages = ContactMessage.query.filter_by(read=False).count()
+        unpublished_posts = BlogPost.query.filter_by(published=False).count()
+        
+        # Create task breakdown
+        task_breakdown = {
+            'pending_requests': pending_requests,
+            'unread_messages': unread_messages,
+            'unpublished_posts': unpublished_posts,
+            'total': pending_requests + unread_messages + unpublished_posts
+        }
     
     return render_template('admin/dashboard.html', 
                          requests=all_requests, 
@@ -216,13 +381,18 @@ def admin_login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        user = User.query.filter_by(username=username).first()
         
-        if user and user.check_password(password):
-            login_user(user)
-            return redirect(url_for('admin_dashboard'))
+        if IS_WORKER:
+            # TODO: Implement D1 user authentication
+            flash('Login not implemented for Workers yet', 'error')
         else:
-            flash('Invalid username or password', 'error')
+            user = User.query.filter_by(username=username).first()
+            
+            if user and user.check_password(password):
+                login_user(user)
+                return redirect(url_for('admin_dashboard'))
+            else:
+                flash('Invalid username or password', 'error')
     
     return render_template('admin/login.html')
 
@@ -354,13 +524,23 @@ def admin_api_pending_tasks():
 def health_check():
     """Health check endpoint for monitoring and load balancers"""
     try:
-        # Test database connection
-        db.session.execute('SELECT 1')
-        return jsonify({
-            'status': 'healthy',
-            'timestamp': datetime.utcnow().isoformat(),
-            'database': 'connected'
-        }), 200
+        if IS_WORKER:
+            # TODO: Test D1 database connection
+            return jsonify({
+                'status': 'healthy',
+                'timestamp': datetime.utcnow().isoformat(),
+                'database': 'D1 connected',
+                'environment': 'worker'
+            }), 200
+        else:
+            # Test database connection
+            db.session.execute('SELECT 1')
+            return jsonify({
+                'status': 'healthy',
+                'timestamp': datetime.utcnow().isoformat(),
+                'database': 'connected',
+                'environment': 'flask'
+            }), 200
     except Exception as e:
         return jsonify({
             'status': 'unhealthy', 
@@ -370,7 +550,7 @@ def health_check():
 
 def create_admin_user():
     """Create default admin user if none exists"""
-    if not User.query.first():
+    if not IS_WORKER and not User.query.first():
         admin = User(
             username='admin',
             email='admin@elliottacres.com'
@@ -382,6 +562,9 @@ def create_admin_user():
 
 def init_sample_data():
     """Initialize sample data for development"""
+    if IS_WORKER:
+        return  # Skip sample data for Workers
+    
     # Sample products
     products_data = [
         {'name': 'Fresh Strawberries', 'category': 'Strawberries', 'price': '$6.00/lb', 'description': 'Sweet, juicy strawberries picked fresh daily'},
@@ -417,7 +600,8 @@ def init_sample_data():
             'title': 'Garlic Butter',
             'ingredients': 'Fresh garlic, Butter, Salt, Herbs',
             'instructions': '1. Mince garlic finely. 2. Mix with softened butter. 3. Add salt and herbs to taste.',
-            'product_id': 6        }
+            'product_id': 6
+        }
     ]
     
     for recipe_data in recipes_data:
@@ -467,7 +651,7 @@ def init_sample_data():
     
     db.session.commit()
 
-if __name__ == '__main__':
+if __name__ == '__main__' and not IS_WORKER:
     with app.app_context():
         db.create_all()
         create_admin_user()

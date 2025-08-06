@@ -1,0 +1,26 @@
+#:schema node_modules/wrangler/config-schema.json
+name = "elliott-acres"
+main = "src/worker.py"
+compatibility_date = "2024-08-06"
+
+compatibility_flags = ["python_workers"]
+
+[env.production]
+name = "elliott-acres"
+
+[vars]
+FLASK_ENV = "production"
+CF_WORKER = "1"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "elliott-acres-db"
+database_id = "" # You'll need to create a D1 database and add the ID here
+
+[[r2_buckets]]
+binding = "BUCKET"
+bucket_name = "elliott-acres-uploads"
+preview_bucket_name = "elliott-acres-uploads-preview"
+
+[build]
+command = "echo 'Build complete'"
