@@ -330,14 +330,20 @@ farm-grown {{ category.lower() }}.{% endblock %} {% block content %}
       {% if recipes %} {% for recipe in recipes %}
       <div class="recipe-card">
         <div class="recipe-card-inner">
-          <div class="recipe-card-front">
+          <div class="recipe-card-front position-relative">
             <img
-              src="{{ recipe.image_url or '/static/images/recipe-default.jpg' }}"
+              src="{{ recipe.image_url or '/static/images/strawberryShortcake.jpg' }}"
               alt="{{ recipe.title }}"
-              class="recipe-image"
+              class="recipe-image w-100 h-100"
+              style="object-fit: cover"
             />
-            <div class="recipe-title">
-              <h5 class="fw-bold mb-0">{{ recipe.title }}</h5>
+            <div
+              class="recipe-title position-absolute bottom-0 start-0 end-0 p-3"
+              style="
+                background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+              "
+            >
+              <h5 class="fw-bold mb-0 text-white">{{ recipe.title }}</h5>
             </div>
           </div>
           <div class="recipe-card-back">
@@ -404,14 +410,20 @@ farm-grown {{ category.lower() }}.{% endblock %} {% block content %}
       endif %} {% for recipe in default_recipes %}
       <div class="recipe-card">
         <div class="recipe-card-inner">
-          <div class="recipe-card-front">
+          <div class="recipe-card-front position-relative">
             <img
-              src="/static/images/recipe-default.jpg"
-              alt="{{ recipe.title }}"
-              class="recipe-image"
+              src="/static/images/strawberryShortcake.jpg"
+              alt="strawberry shortcake"
+              class="recipe-image w-100 h-100"
+              style="object-fit: cover"
             />
-            <div class="recipe-title">
-              <h5 class="fw-bold mb-0">{{ recipe.title }}</h5>
+            <div
+              class="recipe-title position-absolute bottom-0 start-0 end-0 p-3"
+              style="
+                background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+              "
+            >
+              <h5 class="fw-bold mb-0 text-white">{{ recipe.title }}</h5>
             </div>
           </div>
           <div class="recipe-card-back">
