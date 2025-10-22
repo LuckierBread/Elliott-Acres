@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Products - Elliott Acres Farm</title>
+    <meta name="description" content="Explore our fresh, locally grown produce including strawberries, asparagus, garlic, seasonal fruits, and farm-made spices.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+      <div class="container">
+        <a class="navbar-brand fw-bold text-success" href="index.html"><i class="fas fa-leaf me-2"></i>Elliott Acres</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle active" href="#" id="productsDropdown" role="button" data-bs-toggle="dropdown">Products</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="products.html">All Products</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item text-danger" href="#strawberries">🍓 Strawberries</a></li>
+                <li><a class="dropdown-item text-success" href="#asparagus">🥒 Asparagus</a></li>
+                <li><a class="dropdown-item text-warning" href="#garlic">🧄 Garlic</a></li>
+                <li><a class="dropdown-item text-primary" href="#fruits">🍎 Fruits</a></li>
+                <li><a class="dropdown-item text-info" href="#spices">🌿 Spices</a></li>
+              </ul>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+            <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+            <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main class="pt-5">
+<section class="hero-section" style="min-height: 50vh">
+  <div class="container">
+    <div class="hero-content">
+      <h1 class="display-4 fw-bold">Our Fresh Produce</h1>
+      <p class="lead">Discover the vibrant variety of farm-fresh products we grow with love and care</p>
+    </div>
+  </div>
+</section>
+
+<section class="py-5">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="display-5 fw-bold text-success">Product Categories</h2>
+      <p class="lead text-muted">From sweet strawberries to aromatic spices, explore our full range of fresh produce</p>
+    </div>
+
+    <div class="row" id="strawberries">
+      <div class="col-lg-6 mb-4">
+        <div class="product-card category-strawberry h-100">
+          <div class="row g-0 h-100">
+            <div class="col-md-5">
+              <img src="static/images/Strawberries photo 1.png" class="product-card-img w-100 h-100" alt="Fresh Strawberries">
+            </div>
+            <div class="col-md-7">
+              <div class="product-card-body h-100 d-flex flex-column">
+                <h4 class="fw-bold text-strawberry mb-3"><i class="fas fa-circle me-2" style="font-size: 0.8rem"></i>Strawberries</h4>
+                <p class="flex-grow-1">Sweet, juicy strawberries bursting with flavor. Perfect for eating fresh, making jams, or adding to desserts. Available as fresh berries, frozen, and homemade preserves.</p>
+                <div class="mb-3">
+                  <small class="text-muted"><i class="fas fa-calendar me-1"></i>Season: May - July<br><i class="fas fa-leaf me-1"></i>Varieties: 3+ types available</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 mb-4" id="asparagus">
+        <div class="product-card category-asparagus h-100">
+          <div class="row g-0 h-100">
+            <div class="col-md-5">
+              <img src="static/images/asparagus.jpg" class="product-card-img w-100 h-100" alt="Fresh Asparagus">
+            </div>
+            <div class="col-md-7">
+              <div class="product-card-body h-100 d-flex flex-column">
+                <h4 class="fw-bold text-asparagus mb-3"><i class="fas fa-circle me-2" style="font-size: 0.8rem"></i>Asparagus</h4>
+                <p class="flex-grow-1">Tender, crisp asparagus spears harvested at peak freshness. Known for exceptional flavor and texture. Available fresh and pickled with herbs and spices.</p>
+                <div class="mb-3">
+                  <small class="text-muted"><i class="fas fa-calendar me-1"></i>Season: April - June<br><i class="fas fa-leaf me-1"></i>Harvested daily in season</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 mb-4" id="garlic">
+        <div class="product-card category-garlic h-100">
+          <div class="row g-0 h-100">
+            <div class="col-md-5">
+              <img src="static/images/garlic.jpg" class="product-card-img w-100 h-100" alt="Fresh Garlic">
+            </div>
+            <div class="col-md-7">
+              <div class="product-card-body h-100 d-flex flex-column">
+                <h4 class="fw-bold text-garlic mb-3"><i class="fas fa-circle me-2" style="font-size: 0.8rem"></i>Garlic</h4>
+                <p class="flex-grow-1">Premium hardneck garlic with intense flavor and aroma. Multiple heirloom varieties from mild to bold. Available as bulbs, powder, and seasonal scapes.</p>
+                <div class="mb-3">
+                  <small class="text-muted"><i class="fas fa-calendar me-1"></i>Season: July harvest, stored year-round<br><i class="fas fa-leaf me-1"></i>Multiple heirloom varieties</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 mb-4" id="fruits">
+        <div class="product-card category-fruits h-100">
+          <div class="row g-0 h-100">
+            <div class="col-md-5">
+              <img src="static/images/apples.jpg" class="product-card-img w-100 h-100" alt="Seasonal Fruits">
+            </div>
+            <div class="col-md-7">
+              <div class="product-card-body h-100 d-flex flex-column">
+                <h4 class="fw-bold text-fruit mb-3"><i class="fas fa-circle me-2" style="font-size: 0.8rem"></i>Seasonal Fruits</h4>
+                <p class="flex-grow-1">A rotating selection of seasonal fruits grown with care. From summer berries to fall apples, tree-ripened for optimal flavor and nutrition.</p>
+                <div class="mb-3">
+                  <small class="text-muted"><i class="fas fa-calendar me-1"></i>Season: Various throughout year<br><i class="fas fa-leaf me-1"></i>Tree-ripened, no artificial ripening</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-center" id="spices">
+      <div class="col-lg-8">
+        <div class="product-card category-spices">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <img src="static/images/spices.jpg" class="product-card-img w-100 h-100" alt="Farm Spices" style="min-height: 200px">
+            </div>
+            <div class="col-md-8">
+              <div class="product-card-body">
+                <h4 class="fw-bold text-spice mb-3"><i class="fas fa-circle me-2" style="font-size: 0.8rem"></i>Farm-Fresh Spices</h4>
+                <p class="mb-4">Handcrafted spice blends and dried herbs from our own garden. Each blend is carefully created to enhance your culinary creations with pure, intense flavors of farm-fresh ingredients. No artificial additives, peak potency guaranteed.</p>
+                <div class="row mb-4">
+                  <div class="col-sm-6">
+                    <small class="text-muted"><i class="fas fa-calendar me-1"></i>Season: Year-round availability<br><i class="fas fa-leaf me-1"></i>Hand-harvested and dried</small>
+                  </div>
+                  <div class="col-sm-6">
+                    <small class="text-muted"><i class="fas fa-mortar-pestle me-1"></i>Custom blends available<br><i class="fas fa-seedling me-1"></i>No artificial additives</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-success text-white py-5">
+  <div class="container text-center">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <h2 class="display-5 fw-bold mb-4">Ready to Order Fresh Produce?</h2>
+        <p class="lead mb-4">Contact us to check current availability, place orders, or ask questions about our products. We're here to help you get the freshest produce for your table.</p>
+        <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+          <a href="contact.html" class="btn btn-light btn-lg"><i class="fas fa-phone me-2"></i>Contact Us</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+    </main>
+
+    <footer class="bg-dark text-white mt-5">
+      <div class="container py-5">
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <h5 class="text-success">Elliott Acres Farm</h5>
+            <p>Fresh, locally grown produce from our family farm to your table. Committed to sustainable farming and community connections.</p>
+            <div class="social-links">
+              <a href="#" class="text-white me-3"><i class="fab fa-facebook"></i></a>
+              <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
+              <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+            </div>
+          </div>
+          <div class="col-md-2 mb-4">
+            <h6>Quick Links</h6>
+            <ul class="list-unstyled">
+              <li><a href="index.html" class="text-light text-decoration-none">Home</a></li>
+              <li><a href="about.html" class="text-light text-decoration-none">About Us</a></li>
+              <li><a href="products.html" class="text-light text-decoration-none">Products</a></li>
+              <li><a href="contact.html" class="text-light text-decoration-none">Contact</a></li>
+            </ul>
+          </div>
+          <div class="col-md-3 mb-4">
+            <h6>Products</h6>
+            <ul class="list-unstyled">
+              <li><a href="#strawberries" class="text-light text-decoration-none">Strawberries</a></li>
+              <li><a href="#asparagus" class="text-light text-decoration-none">Asparagus</a></li>
+              <li><a href="#garlic" class="text-light text-decoration-none">Garlic</a></li>
+              <li><a href="#fruits" class="text-light text-decoration-none">Fruits</a></li>
+              <li><a href="#spices" class="text-light text-decoration-none">Spices</a></li>
+            </ul>
+          </div>
+          <div class="col-md-3 mb-4">
+            <h6>Contact Info</h6>
+            <p class="mb-1"><i class="fas fa-map-marker-alt me-2"></i>123 Farm Road, Rural Valley</p>
+            <p class="mb-1"><i class="fas fa-phone me-2"></i>(555) 123-4567</p>
+            <p class="mb-1"><i class="fas fa-envelope me-2"></i>hello@elliottacres.com</p>
+          </div>
+        </div>
+        <hr class="my-4">
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <p class="mb-0">&copy; 2025 Elliott Acres Farm. All rights reserved.</p>
+          </div>
+          <div class="col-md-6 text-md-end">
+            <small>Fresh. Local. Sustainable.</small>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="static/js/main.js"></script>
+</body>
+</html>
