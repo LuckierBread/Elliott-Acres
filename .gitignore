@@ -1,29 +1,42 @@
-# Virtual environment
-/venv
-
-# Python cache files
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
+*.so
+.Python
+venv/
+ENV/
+env/
 
-# Environment files
+# Flask
+instance/
+*.db
+*.sqlite
 .env
 .env.local
 .env.production
 
-# Database
-instance/
-*.db
-*.sqlite
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
 
-# Uploads
+# OS
+.DS_Store
+Thumbs.db
+
+# Uploads (Flask dynamic uploads, not static images)
+# Note: Keep static/images/ for static site
 static/uploads/*
 !static/uploads/.gitkeep
 
-# IDE files
-.vscode/
-.idea/
+# Build artifacts from Cloudflare
+node_modules/
+dist/
+.wrangler/
 
-# OS files
-.DS_Store
-Thumbs.db
+# Temporary files
+/tmp/
+*.log

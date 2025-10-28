@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Elliott Acres Farm</title>
+    <meta name="description" content="Contact Elliott Acres Farm for product availability, orders, farm visits, or any questions about our fresh produce.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+      <div class="container">
+        <a class="navbar-brand fw-bold text-success" href="index.html"><i class="fas fa-leaf me-2"></i>Elliott Acres</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="productsDropdown" role="button" data-bs-toggle="dropdown">Products</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="products.html">All Products</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item text-danger" href="products.html#strawberries">🍓 Strawberries</a></li>
+                <li><a class="dropdown-item text-success" href="products.html#asparagus">🥒 Asparagus</a></li>
+                <li><a class="dropdown-item text-warning" href="products.html#garlic">🧄 Garlic</a></li>
+                <li><a class="dropdown-item text-primary" href="products.html#fruits">🍎 Fruits</a></li>
+                <li><a class="dropdown-item text-info" href="products.html#spices">🌿 Spices</a></li>
+              </ul>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+            <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+            <li class="nav-item"><a class="nav-link active" href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main class="pt-5">
+<section class="hero-section" style="min-height: 50vh">
+  <div class="container">
+    <div class="hero-content">
+      <h1 class="display-4 fw-bold">Get In Touch</h1>
+      <p class="lead">We'd love to hear from you! Contact us about products, visits, or any questions.</p>
+    </div>
+  </div>
+</section>
+
+<section class="py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 mb-5">
+        <div class="contact-form">
+          <h2 class="h3 fw-bold text-success mb-4">Send Us a Message</h2>
+          <form action="https://formspree.io/f/your-form-id" method="POST" id="contactForm">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="name" class="form-label fw-semibold">Name *</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="email" class="form-label fw-semibold">Email *</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="phone" class="form-label fw-semibold">Phone</label>
+                <input type="tel" class="form-control" id="phone" name="phone">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="product_interest" class="form-label fw-semibold">Product Interest</label>
+                <select class="form-select" id="product_interest" name="product_interest">
+                  <option value="">Select a category...</option>
+                  <option value="Strawberries">🍓 Strawberries</option>
+                  <option value="Asparagus">🥒 Asparagus</option>
+                  <option value="Garlic">🧄 Garlic</option>
+                  <option value="Fruits">🍎 Seasonal Fruits</option>
+                  <option value="Spices">🌿 Spices & Herbs</option>
+                  <option value="Multiple">Multiple Products</option>
+                  <option value="Farm Visit">Farm Visit</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="subject" class="form-label fw-semibold">Subject *</label>
+              <input type="text" class="form-control" id="subject" name="subject" required>
+            </div>
+            <div class="mb-4">
+              <label for="message" class="form-label fw-semibold">Message *</label>
+              <textarea class="form-control" id="message" name="message" rows="5" placeholder="Tell us how we can help you..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-success btn-lg">
+              <i class="fas fa-paper-plane me-2"></i>Send Message
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="sticky-top" style="top: 100px">
+          <div class="card border-0 shadow-custom mb-4">
+            <div class="card-body">
+              <h5 class="card-title fw-bold text-success mb-4">
+                <i class="fas fa-phone me-2"></i>Contact Information
+              </h5>
+              <div class="mb-3">
+                <div class="d-flex align-items-center mb-2">
+                  <i class="fas fa-map-marker-alt text-success me-3"></i>
+                  <div>
+                    <strong>Farm Address</strong><br>
+                    <small class="text-muted">123 Farm Road<br>Rural Valley, State 12345</small>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <div class="d-flex align-items-center mb-2">
+                  <i class="fas fa-phone text-success me-3"></i>
+                  <div>
+                    <strong>Phone</strong><br>
+                    <small class="text-muted">(555) 123-4567</small>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <div class="d-flex align-items-center mb-2">
+                  <i class="fas fa-envelope text-success me-3"></i>
+                  <div>
+                    <strong>Email</strong><br>
+                    <small class="text-muted">hello@elliottacres.com</small>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <div class="d-flex align-items-center mb-2">
+                  <i class="fas fa-clock text-success me-3"></i>
+                  <div>
+                    <strong>Farm Hours</strong><br>
+                    <small class="text-muted">
+                      Mon-Fri: 8:00 AM - 6:00 PM<br>
+                      Sat: 8:00 AM - 4:00 PM<br>
+                      Sun: By appointment
+                    </small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+    </main>
+
+    <footer class="bg-dark text-white mt-5">
+      <div class="container py-5">
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <h5 class="text-success">Elliott Acres Farm</h5>
+            <p>Fresh, locally grown produce from our family farm to your table.</p>
+          </div>
+          <div class="col-md-2 mb-4">
+            <h6>Quick Links</h6>
+            <ul class="list-unstyled">
+              <li><a href="index.html" class="text-light text-decoration-none">Home</a></li>
+              <li><a href="about.html" class="text-light text-decoration-none">About Us</a></li>
+              <li><a href="products.html" class="text-light text-decoration-none">Products</a></li>
+              <li><a href="contact.html" class="text-light text-decoration-none">Contact</a></li>
+            </ul>
+          </div>
+          <div class="col-md-3 mb-4">
+            <h6>Contact Info</h6>
+            <p class="mb-1"><i class="fas fa-map-marker-alt me-2"></i>123 Farm Road, Rural Valley</p>
+            <p class="mb-1"><i class="fas fa-phone me-2"></i>(555) 123-4567</p>
+            <p class="mb-1"><i class="fas fa-envelope me-2"></i>hello@elliottacres.com</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="static/js/main.js"></script>
+</body>
+</html>

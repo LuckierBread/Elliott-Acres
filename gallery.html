@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Gallery - Elliott Acres</title>
+    <meta name="description" content="A visual journey through our farm and seasonal harvests.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+      <div class="container">
+        <a class="navbar-brand fw-bold text-success" href="index.html"><i class="fas fa-leaf me-2"></i>Elliott Acres</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="productsDropdown" role="button" data-bs-toggle="dropdown">Products</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="products.html">All Products</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item text-danger" href="products.html#strawberries">🍓 Strawberries</a></li>
+                <li><a class="dropdown-item text-success" href="products.html#asparagus">🥒 Asparagus</a></li>
+                <li><a class="dropdown-item text-warning" href="products.html#garlic">🧄 Garlic</a></li>
+                <li><a class="dropdown-item text-primary" href="products.html#fruits">🍎 Fruits</a></li>
+                <li><a class="dropdown-item text-info" href="products.html#spices">🌿 Spices</a></li>
+              </ul>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+            <li class="nav-item"><a class="nav-link active" href="gallery.html">Gallery</a></li>
+            <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main class="pt-5">
+<div class="container-fluid hero-section bg-primary text-white py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h1 class="display-4 mb-3">Farm Gallery</h1>
+        <p class="lead">A visual journey through our farm and seasonal harvests</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container my-5">
+  <div class="row gallery-grid" id="gallery-container">
+    <div class="col-lg-4 col-md-6 col-sm-12 mb-4 gallery-item">
+      <div class="gallery-card position-relative">
+        <img src="static/images/barn.jpg" class="img-fluid gallery-image" alt="Farm barn">
+        <div class="gallery-overlay">
+          <div class="gallery-info">
+            <h5>Our Barn</h5>
+            <p><i class="fas fa-search-plus"></i> Click to enlarge</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-sm-12 mb-4 gallery-item">
+      <div class="gallery-card position-relative">
+        <img src="static/images/farmers.jpg" class="img-fluid gallery-image" alt="Serena and Chris Elliott">
+        <div class="gallery-overlay">
+          <div class="gallery-info">
+            <h5>The Farmers</h5>
+            <p><i class="fas fa-search-plus"></i> Click to enlarge</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-sm-12 mb-4 gallery-item">
+      <div class="gallery-card position-relative">
+        <img src="static/images/Strawberries photo 1.png" class="img-fluid gallery-image" alt="Fresh strawberries">
+        <div class="gallery-overlay">
+          <div class="gallery-info">
+            <h5>Fresh Strawberries</h5>
+            <p><i class="fas fa-search-plus"></i> Click to enlarge</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-sm-12 mb-4 gallery-item">
+      <div class="gallery-card position-relative">
+        <img src="static/images/asparagus.jpg" class="img-fluid gallery-image" alt="Fresh asparagus">
+        <div class="gallery-overlay">
+          <div class="gallery-info">
+            <h5>Asparagus Harvest</h5>
+            <p><i class="fas fa-search-plus"></i> Click to enlarge</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-sm-12 mb-4 gallery-item">
+      <div class="gallery-card position-relative">
+        <img src="static/images/garlic.jpg" class="img-fluid gallery-image" alt="Fresh garlic bulbs">
+        <div class="gallery-overlay">
+          <div class="gallery-info">
+            <h5>Fresh Garlic</h5>
+            <p><i class="fas fa-search-plus"></i> Click to enlarge</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-sm-12 mb-4 gallery-item">
+      <div class="gallery-card position-relative">
+        <img src="static/images/fresh harvest.jpg" class="img-fluid gallery-image" alt="Daily harvest">
+        <div class="gallery-overlay">
+          <div class="gallery-info">
+            <h5>Daily Harvest</h5>
+            <p><i class="fas fa-search-plus"></i> Click to enlarge</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    </main>
+
+    <footer class="bg-dark text-white mt-5">
+      <div class="container py-5">
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <h5 class="text-success">Elliott Acres Farm</h5>
+            <p>Fresh, locally grown produce from our family farm to your table.</p>
+          </div>
+          <div class="col-md-2 mb-4">
+            <h6>Quick Links</h6>
+            <ul class="list-unstyled">
+              <li><a href="index.html" class="text-light text-decoration-none">Home</a></li>
+              <li><a href="about.html" class="text-light text-decoration-none">About Us</a></li>
+              <li><a href="products.html" class="text-light text-decoration-none">Products</a></li>
+              <li><a href="contact.html" class="text-light text-decoration-none">Contact</a></li>
+            </ul>
+          </div>
+          <div class="col-md-3 mb-4">
+            <h6>Contact Info</h6>
+            <p class="mb-1"><i class="fas fa-map-marker-alt me-2"></i>123 Farm Road, Rural Valley</p>
+            <p class="mb-1"><i class="fas fa-phone me-2"></i>(555) 123-4567</p>
+            <p class="mb-1"><i class="fas fa-envelope me-2"></i>hello@elliottacres.com</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="static/js/main.js"></script>
+</body>
+</html>
